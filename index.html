@@ -5,6 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Plataforma ZeroSP — Scripts & Automação para Estudos</title>
 
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+  import { getFirestore, collection, doc, updateDoc, increment, query, orderBy, limit, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+// 1. Primeiro define a configuração
+const firebaseConfig = {
+  apiKey: "AIzaSyAhxOGQMO9GExflLgyhzbBtZues_XAztUU",
+  authDomain: "zerosp-e9bfd.firebaseapp.com",
+  projectId: "zerosp-e9bfd",
+  storageBucket: "zerosp-e9bfd.firebasestorage.app",
+  messagingSenderId: "87828549082",
+  appId: "1:87828549082:web:20ea54fc78d1b282fbc4e3",
+  measurementId: "G-HCT4HXP1MF"
+};
+
+// 2. Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
+
+  // A partir daqui, você pode usar o Firebase, ex: Firestore, Auth etc.
+</script>
+
   <!-- SEO -->
   <meta name="description" content="Plataforma ZeroSP — recursos, scripts e automações para agilizar tarefas acadêmicas.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Ctext y='50%' x='50%' text-anchor='middle' dominant-baseline='central' font-size='44'%3EZ%3C/text%3E%3C/svg%3E">
@@ -13,10 +38,6 @@
   <meta property="og:image" content="https://ui-avatars.com/api/?name=ZeroSP&background=0D1117&color=fff&bold=true" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- Fonte (opcional; remova se quiser 0 requests) -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -244,7 +265,7 @@
     .i.sun{ background: conic-gradient(from 0deg, #0000 0 25%, #000 0 100%) }
   </style>
 </head>
-<body>
+
   <!-- Navbar -->
   <header class="nav" role="banner">
     <div class="nav-inner">
@@ -319,7 +340,7 @@
 <section id="discord" class="section">
   <h2 class="h2">💬 Nosso Discord</h2>
   <p class="muted">Entre no servidor e acompanhe as novidades da Plataforma ZeroSP.</p>
-  <div style="display:flex; justify-content:center; margin-top:20px;">
+  <div class="discord-container">
     <iframe src="https://discord.com/widget?id=1413907595374362735&theme=dark"
       width="350" height="500"
       allowtransparency="true"
@@ -328,6 +349,22 @@
     </iframe>
   </div>
 </section>
+
+<style>
+  .discord-container {
+    display: flex;
+    justify-content: flex-end; /* Alinha o widget à direita */
+    margin-top: 20px;
+  }
+
+  /* Responsivo: centraliza no mobile */
+  @media (max-width: 860px) {
+    .discord-container {
+      justify-content: center;
+    }
+  }
+</style>
+
 
   <!-- Rodapé -->
   <footer>
@@ -356,17 +393,83 @@
     </div>
   </div>
 
+  <!-- Modal de Vídeo -->
+<div id="videoModal" class="modal" aria-hidden="true" aria-label="Vídeo Tutorial">
+  <div class="modal-card" style="max-width:700px">
+    <iframe id="videoFrame" width="100%" height="400" src="" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    <div class="modal-actions">
+      <button id="closeVideo" class="btn">Fechar</button>
+    </div>
+  </div>
+</div>
   <script>
+      // --- Adiciona botão de vídeo em cada card ---
+  function addVideoButtons() {
+    document.querySelectorAll('.card').forEach((card, index) => {
+      const videoURL = LINKS[index]?.video;
+      if(videoURL){
+        const btn = document.createElement('button');
+        btn.className = 'chip video-btn';
+        btn.setAttribute('data-video', videoURL);
+        btn.textContent = '❓Como Usar';
+        card.querySelector('.card-actions').appendChild(btn);
+      }
+    });
+  }
+  
+  function renderTopScripts(scripts){
+  // Exemplo: atualiza o "hero-side" com o script mais visto
+  const heroSide = document.querySelector('.hero-side');
+  if(scripts.length){
+    heroSide.textContent = scripts[0].title;
+  }
+}
+
+
+  addVideoButtons();
+
+  // --- Modal ---
+  const videoModal = document.getElementById('videoModal');
+  const videoFrame = document.getElementById('videoFrame');
+  const closeVideo = document.getElementById('closeVideo');
+
+  document.addEventListener('click', e => {
+    if(e.target.classList.contains('video-btn')){
+      const videoURL = e.target.getAttribute('data-video');
+      if(videoURL){
+        videoFrame.src = videoURL + "?autoplay=1";
+        videoModal.classList.add('open');
+        videoModal.setAttribute('aria-hidden','false');
+      }
+    }
+  });
+
+  closeVideo.addEventListener('click', () => {
+    videoFrame.src = "";
+    videoModal.classList.remove('open');
+    videoModal.setAttribute('aria-hidden','true');
+  });
+
+  videoModal.addEventListener('click', e => {
+    if(e.target === videoModal){
+      videoFrame.src = "";
+      videoModal.classList.remove('open');
+      videoModal.setAttribute('aria-hidden','true');
+    }
+  });
     // --------- DATA (edite aqui) ----------
     const LINKS = [
       {
+	id: "Khan Academy",
         title: "Khan Academy",
         desc: "Ferramentas auxiliares para a plataforma Khan Academy.",
         url: "https://github.com/Mafaxhack/KhanW?tab=readme-ov-file",
         category: "plataforma",
+	video: "https://www.youtube.com/embed/vIfeqo8hd8c",
         actions: [{label:"Abrir", url:"https://github.com/Mafaxhack/KhanW?tab=readme-ov-file", primary:true}]
       },
       {
+	id: "Tarefa SP",
         title: "Tarefa SP",
         desc: "Automatizações e atalhos úteis para tarefas.",
         url: "https://taskitos.cupiditys.lol/",
@@ -374,6 +477,7 @@
         actions: [{label:"Abrir", url:"https://taskitos.cupiditys.lol/", primary:true}]
       },
       {
+	id: "Redação Paulista",
         title: "Redação Paulista",
         desc: "Ferramentas de apoio para redações e textos.",
         url: "https://redacao.cupiditys.lol/",
@@ -381,6 +485,7 @@
         actions: [{label:"GitHub", url:"https://redacao.cupiditys.lol/", primary:true}]
       },
       {
+	id: "SPeak (Texto → Voz)",
         title: "SPeak (Texto → Voz)",
         desc: "Gere fala a partir de texto para apresentações e estudos.",
         url: "https://speakify.cupiditys.lol/",
@@ -390,12 +495,12 @@
     ];
 
     const OWNERS = [
-      { name:"Mafa", avatar:"" },
-      { name:"Paulo", avatar:"" }
+      { name:"Mafa", avatar:"https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/8ee547aca8d125ba38499960cfb0600c~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=c5de6e01&x-expires=1757469600&x-signature=XQzwJdFFD7qn0%2FCXgQzgOJrK9l0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" },
+      { name:"Paulo", avatar:"https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/9faec34f9ed2bc34e139edb6a188a7a8~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=2dd07ff1&x-expires=1757469600&x-signature=WzPhPvV7t0knsi8LGIkydT7JFd4%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" }
     ];
     const COLEADERS = [
-      { name:"Pedro", avatar:"" },
-      { name:"Gaabzin", avatar:"" }
+      { name:"Pedro", avatar:"https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/89266555e0332b9d0337a44f9113a59a~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=ea91183c&x-expires=1757469600&x-signature=qA7pRskqngPXvL1GICDMPFBT7iQ%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" },
+      { name:"Gaabzin", avatar:"https://p77-sign-va.tiktokcdn.com/tos-maliva-avt-0068/b0025eac7da494ebb5d334c1b311e9f3~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=c2fc6ca6&x-expires=1757469600&x-signature=JIwTZUgC0XzsS0QKv89Mx%2B5o40g%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" }
     ];
     const DEVELOPERS = [
       // {name:"SeuDev", avatar:""},
@@ -411,6 +516,24 @@
       t.classList.add('show');
       setTimeout(()=> t.classList.remove('show'), timeout);
     }
+     function renderPeople(containerSel, title, arr){
+ 	 const container = document.querySelector(containerSel);
+	  if(arr.length===0) return;
+  	const label = document.createElement('h3');
+ 	 label.className = 'h2';
+  	label.textContent = title;
+ 	 container.parentElement.insertBefore(label, container);
+
+ 	 container.innerHTML = arr.map(p=>`
+  	  <div class="person">
+   	   <img alt="${p.name}" class="avatar" src="${p.avatar || avatarFor(p.name)}" />
+   	   <div>
+   	     <div class="name">${p.name}</div>
+  	      <div class="role muted">${title.slice(0,-1)}</div>
+   	   </div>
+  	  </div>
+	  `).join('');
+	}
 
     function avatarFor(n){
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(n)}&background=random&bold=true`;
@@ -418,37 +541,51 @@
 
     // --------- Render Cards ----------
     const grid = $('#recursos');
-    function renderCards(list){
-      grid.innerHTML = '';
-      if(list.length === 0){
-        grid.innerHTML = `<div class="card" style="grid-column: span 12"><div class="card-desc">Nenhum recurso encontrado.</div></div>`;
-        return;
-      }
-      list.forEach(item=>{
-        const el = document.createElement('article');
-        el.className = 'card';
-        el.innerHTML = `
-          <div class="card-header">
-            <span class="tag">${item.category}</span>
-          </div>
-          <h3 class="card-title">${item.title}</h3>
-          <p class="card-desc">${item.desc}</p>
-          <div class="card-actions">
-            ${item.actions?.map(a=>`<a class="link" href="${a.url}" target="_blank" rel="noopener"><span class="chip ${a.primary?'primary':''}">${a.label}</span></a>`).join('') ?? ''}
-            <button class="chip" data-copy="${item.url}">Copiar link</button>
-          </div>
-        `;
-        grid.appendChild(el);
-      });
+function renderCards(list){
+  grid.innerHTML = '';
+  if(list.length === 0){
+    grid.innerHTML = `<div class="card" style="grid-column: span 12"><div class="card-desc">Nenhum recurso encontrado.</div></div>`;
+    return;
+  }
 
-      // bind copy buttons
-      grid.querySelectorAll('[data-copy]').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          navigator.clipboard.writeText(btn.getAttribute('data-copy')||'');
-          toast('Link copiado!');
-        });
+  list.forEach(item=>{
+    const el = document.createElement('article');
+    el.className = 'card';
+    el.innerHTML = `
+      <div class="card-header">
+        <span class="tag">${item.category}</span>
+      </div>
+      <h3 class="card-title">${item.title}</h3>
+      <p class="card-desc">${item.desc}</p>
+      <div class="card-actions">
+        ${item.actions?.map(a=>`<a class="link" href="${a.url}" target="_blank" rel="noopener"><span class="chip ${a.primary?'primary':''}">${a.label}</span></a>`).join('') ?? ''}
+        <button class="chip" data-copy="${item.url}">Copiar link</button>
+      </div>
+    `;
+    grid.appendChild(el);
+
+    // --- Incrementa views apenas nos links "Abrir" / "GitHub"
+    el.querySelectorAll('.card-actions a.link').forEach(link => {
+      link.addEventListener('click', async () => {
+        const script = LINKS.find(l => l.url === link.href || l.actions.some(a => a.url === link.href));
+        if(script){
+          const scriptRef = doc(db, "scripts", script.id);
+          await updateDoc(scriptRef, { views: increment(1) });
+        }
       });
-    }
+    });
+  });
+
+  // bind copy buttons
+  grid.querySelectorAll('[data-copy]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      navigator.clipboard.writeText(btn.getAttribute('data-copy')||'');
+      toast('Link copiado!');
+    });
+  });
+
+  addVideoButtons();
+}
 
     // --------- Search / Filter ----------
     const input = $('#search');
@@ -528,6 +665,15 @@
     renderPeople('#coleaders', 'Co-Fundadores', COLEADERS);
     renderPeople('#developers', 'Desenvolvedores', DEVELOPERS);
     applyFilter();
+	
+    // Para atualizar o painel ZeroSP em tempo real
+const topQuery = query(collection(db, "scripts"), orderBy("views", "desc"), limit(5));
+onSnapshot(topQuery, snapshot => {
+  const top = snapshot.docs.map(doc => doc.data());
+  renderTopScripts(top);
+});
+
+
   </script>
 </body>
 </html>
