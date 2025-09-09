@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plataforma ZeroSP — Scripts & Automação para Estudos</title>
+  <title>🐝 Bee plataforma educacional</title>
 
 
   <script type="module">
@@ -279,12 +279,6 @@ const db = getFirestore(app);
         <a href="#creditos">Créditos</a>
       </nav>
 
-      <div class="nav-actions">
-        <button id="toggleTheme" class="btn icon-btn" title="Alternar tema" aria-label="Alternar tema">🌓</button>
-        <button id="openDonate" class="btn">💚 Doar</button>
-        <button id="hamb" class="btn icon-btn hamb" aria-label="Menu">☰</button>
-      </div>
-    </div>
 
     <div id="drawer" class="drawer" role="navigation" aria-label="Menu móvel">
 
@@ -294,15 +288,15 @@ const db = getFirestore(app);
   <!-- Hero -->
   <section class="hero" id="top">
     <div class="hero-card">
-      <span class="pill">⚡ Scripts & Automação</span>
-      <h1>Central ZeroSP</h1>
-      <p class="sub">Encontre ferramentas e recursos para acelerar seu fluxo de estudos. Tudo em um só lugar.</p>
+      <span class="pill">⚡</span>
+      <h1>Colmeia</h1>
+      <p class="sub">Bem-vindo à ZeroSP — uma plataforma criada para apoiar estudantes no aprendizado de tecnologia e no aumento da produtividade.</p>
       <div style="display:flex; gap:10px; flex-wrap:wrap">
         <a class="btn primary" href="#recursos">Explorar Recursos</a>
         <button class="btn" id="copyLink">Copiar Link</button>
       </div>
     </div>
-    <div class="hero-side">Painel ZeroSP</div>
+    <div class="hero-side">Painel</div>
   </section>
 
   <!-- Toolbar -->
@@ -323,9 +317,7 @@ const db = getFirestore(app);
   <!-- Sobre -->
   <section id="sobre" class="section">
     <h2 class="h2">Sobre</h2>
-    <p class="muted">
-      A Plataforma ZeroSP reúne scripts e automações para tornar seu estudo mais ágil.
-      Criada por estudantes e desenvolvedores, mantida pela comunidade. Use com responsabilidade.
+    <p class="muted">Plataforma educacional focada em produtividade, aprendizado digital e organização para estudantes.
     </p>
   </section>
 
@@ -336,44 +328,15 @@ const db = getFirestore(app);
     <div class="credits" id="coleaders"></div>
     <div class="credits" id="developers"></div>
   </section>
-<!-- Discord Widget -->
-<section id="discord" class="section">
-  <h2 class="h2">💬 Nosso Discord</h2>
-  <p class="muted">Entre no servidor e acompanhe as novidades da Plataforma ZeroSP.</p>
-  <div class="discord-container">
-    <iframe src="https://discord.com/widget?id=1413907595374362735&theme=dark"
-      width="350" height="500"
-      allowtransparency="true"
-      frameborder="0"
-      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-    </iframe>
-  </div>
-</section>
 
-<style>
-  .discord-container {
-    display: flex;
-    justify-content: flex-end; /* Alinha o widget à direita */
-    margin-top: 20px;
-  }
-
-  /* Responsivo: centraliza no mobile */
-  @media (max-width: 860px) {
-    .discord-container {
-      justify-content: center;
-    }
-  }
-</style>
 
 
   <!-- Rodapé -->
   <footer>
     <div class="foot-inner">
-      <span class="muted">© 2025 Plataforma ZeroSP</span>
+      <span class="muted">© 2025 🐝 Bee owl</span>
       <div class="social">
         <a href="#" title="Website">🌐</a>
-        <a href="#" title="Discord">💬</a>
-        <a href="#" title="Doação">💚</a>
       </div>
     </div>
   </footer>
@@ -381,17 +344,6 @@ const db = getFirestore(app);
   <!-- Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite">Link copiado!</div>
 
-  <!-- Modal Doação -->
-  <div id="donateModal" class="modal" aria-hidden="true" aria-label="Doação">
-    <div class="modal-card">
-      <h3 style="margin:0 0 8px">Apoie o projeto 💚</h3>
-      <p class="muted">Sua contribuição ajuda a manter os servidores e o desenvolvimento.</p>
-      <div class="modal-actions">
-        <a class="btn primary" href="https://pixgg.com" target="_blank" rel="noopener">Doar via Pix</a>
-        <button id="closeDonate" class="btn">Fechar</button>
-      </div>
-    </div>
-  </div>
 
   <!-- Modal de Vídeo -->
 <div id="videoModal" class="modal" aria-hidden="true" aria-label="Vídeo Tutorial">
@@ -479,7 +431,7 @@ const db = getFirestore(app);
       {
 	id: "Redação Paulista",
         title: "Redação Paulista",
-        desc: "Ferramentas de apoio para redações e textos.",
+        desc: "Ferramentas de o para redações e textos.",
         url: "https://redacao.cupiditys.lol/",
         category: "redacao",
         actions: [{label:"GitHub", url:"https://redacao.cupiditys.lol/", primary:true}]
