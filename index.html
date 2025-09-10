@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<body>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🐝 Bee plataforma educacional</title>
@@ -517,29 +516,6 @@ function renderCards(list){
     `;
     grid.appendChild(el);
 
-    // --- Incrementa views apenas nos links "Abrir" / "GitHub"
-    el.querySelectorAll('.card-actions a.link').forEach(link => {
-      link.addEventListener('click', async () => {
-        const script = LINKS.find(l => l.url === link.href || l.actions.some(a => a.url === link.href));
-        if(script){
-          const scriptRef = doc(db, "scripts", script.id);
-          await updateDoc(scriptRef, { views: increment(1) });
-        }
-      });
-    });
-  });
-
-  // bind copy buttons
-  grid.querySelectorAll('[data-copy]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      navigator.clipboard.writeText(btn.getAttribute('data-copy')||'');
-      toast('Link copiado!');
-    });
-  });
-
-  addVideoButtons();
-}
-
     // --------- Search / Filter ----------
     const input = $('#search');
     const filter = $('#filter');
@@ -564,6 +540,30 @@ function renderCards(list){
         e.preventDefault(); input.focus();
       }
     });
+	  
+    // --- Incrementa views apenas nos links "Abrir" / "GitHub"
+    el.querySelectorAll('.card-actions a.link').forEach(link => {
+      link.addEventListener('click', async () => {
+        const script = LINKS.find(l => l.url === link.href || l.actions.some(a => a.url === link.href));
+        if(script){
+          const scriptRef = doc(db, "scripts", script.id);
+          await updateDoc(scriptRef, { views: increment(1) });
+        }
+      });
+    });
+  });
+
+  // bind copy buttons
+  grid.querySelectorAll('[data-copy]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      navigator.clipboard.writeText(btn.getAttribute('data-copy')||'');
+      toast('Link copiado!');
+    });
+  });
+
+  addVideoButtons();
+}
+
 
     // --------- Theme ----------
 
