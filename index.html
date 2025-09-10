@@ -1,632 +1,101 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang=pt-BR>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🐝 Bee plataforma educacional</title>
-
-
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-  import { getFirestore, collection, doc, updateDoc, increment, query, orderBy, limit, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-// 1. Primeiro define a configuração
-const firebaseConfig = {
-  apiKey: "AIzaSyAhxOGQMO9GExflLgyhzbBtZues_XAztUU",
-  authDomain: "zerosp-e9bfd.firebaseapp.com",
-  projectId: "zerosp-e9bfd",
-  storageBucket: "zerosp-e9bfd.firebasestorage.app",
-  messagingSenderId: "87828549082",
-  appId: "1:87828549082:web:20ea54fc78d1b282fbc4e3",
-  measurementId: "G-HCT4HXP1MF"
-};
-
-// 2. Inicializa o Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-
-  // A partir daqui, você pode usar o Firebase, ex: Firestore, Auth etc.
-</script>
-
-  <!-- SEO -->
-  <meta name="description" content="Plataforma ZeroSP — recursos, scripts e automações para agilizar tarefas acadêmicas.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Ctext y='50%' x='50%' text-anchor='middle' dominant-baseline='central' font-size='44'%3EZ%3C/text%3E%3C/svg%3E">
-  <meta property="og:title" content="Plataforma ZeroSP" />
-  <meta property="og:description" content="Recursos, scripts e automações para estudos." />
-  <meta property="og:image" content="https://ui-avatars.com/api/?name=ZeroSP&background=0D1117&color=fff&bold=true" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <style>
-    :root{
-      --bg: #0d0f14;
-      --bg-soft: #12151d;
-      --text: #e7e9ee;
-      --muted:#a9b0be;
-      --card:#121722;
-      --card-2:#151b28;
-      --primary:#6ee7b7; /* verde menta */
-      --primary-2:#34d399;
-      --accent:#8ab4ff;
-      --danger:#f87171;
-      --ring: 0 0 0 4px rgba(110,231,183,.25);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --border: 1px solid rgba(255,255,255,.06);
-      --radius:16px;
-    }
-    /* light */
-    .light{
-      --bg:#f6f7fb;
-      --bg-soft:#ffffff;
-      --text:#0c1222;
-      --muted:#475569;
-      --card:#ffffff;
-      --card-2:#f1f5f9;
-      --primary:#0ea5e9;
-      --primary-2:#0284c7;
-      --accent:#111827;
-      --danger:#dc2626;
-      --ring: 0 0 0 4px rgba(14,165,233,.2);
-      --shadow: 0 10px 30px rgba(2,6,23,.08);
-      --border: 1px solid rgba(2,6,23,.06);
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 80% -20%, rgba(110,231,183,.12), transparent 60%),
-                  radial-gradient(1000px 500px at -10% 0%, rgba(138,180,255,.10), transparent 50%),
-                  var(--bg);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    /* Navbar */
-    .nav{
-      position:sticky; top:0; z-index:50;
-      background: color-mix(in srgb, var(--bg-soft) 85%, transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: var(--border);
-    }
-    .nav-inner{
-      max-width:1100px; margin:0 auto;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 18px;
-    }
-    .brand{display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.2px}
-    .brand .logo{
-      width:36px; height:36px; display:grid; place-items:center; border-radius:10px;
-      background: linear-gradient(145deg, var(--card), var(--card-2));
-      border:var(--border);
-      box-shadow: var(--shadow);
-      font-weight:800;
-    }
-    .nav-links{display:flex; gap:18px; align-items:center}
-    .nav-links a{
-      text-decoration:none; color:var(--muted); font-weight:600; font-size:.95rem;
-      padding:8px 10px; border-radius:10px; transition:.2s;
-    }
-    .nav-links a:hover, .nav-links a:focus{ color:var(--text); background:var(--card-2) }
-    .nav-actions{display:flex; gap:8px; align-items:center}
-    .btn{
-      appearance:none; border:var(--border); background:var(--card);
-      color:var(--text); padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer;
-      transition:.2s; display:inline-flex; align-items:center; gap:8px;
-    }
-    .btn:hover{ transform:translateY(-1px); background:var(--card-2)}
-    .btn.primary{ background:linear-gradient(145deg, var(--primary), var(--primary-2)); color:#0b1220; border:none }
-    .btn.primary:hover{ filter:brightness(.98) }
-    .icon-btn{width:42px; height:42px; border-radius:12px; display:grid; place-items:center}
-
-    /* hamburger */
-    .hamb{display:none}
-    @media (max-width:860px){
-      .nav-links{ display:none }
-      .hamb{display:inline-grid}
-      .drawer{ display:block; position:fixed; inset:60px 0 auto 0; background:var(--bg-soft); border-bottom:var(--border); padding:12px; transform-origin: top; scale:0 1; opacity:0; transition:.2s }
-      .drawer.open{ scale:1 1; opacity:1 }
-      .drawer a{ display:block; padding:14px 10px; color:var(--text); text-decoration:none; border-radius:10px }
-      .drawer a:hover{ background:var(--card-2) }
-    }
-
-    /* Hero */
-    .hero{
-      max-width:1100px; margin:32px auto 0; padding:24px 18px 0;
-      display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; align-items:center;
-    }
-    .hero-card{
-      background: linear-gradient(145deg, var(--card), var(--card-2));
-      border:var(--border); border-radius: var(--radius);
-      padding:32px; box-shadow: var(--shadow); position:relative; overflow:hidden;
-    }
-    .hero h1{ font-size: clamp(1.8rem, 2.8vw + 1rem, 3rem); margin:0 0 10px }
-    .sub{ color:var(--muted); line-height:1.6; margin:0 0 18px }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px; font-weight:700; color:#0b1220;
-      padding:8px 12px; border-radius:999px; background:linear-gradient(145deg,var(--primary),var(--primary-2));
-      margin-bottom:14px;
-    }
-    /* mock side panel */
-    .hero-side{
-      aspect-ratio: 4/3; border-radius: var(--radius); border:var(--border);
-      background:
-        radial-gradient(180px 80px at 80% 15%, rgba(110,231,183,.25), transparent 60%),
-        radial-gradient(200px 90px at 0% 90%, rgba(138,180,255,.25), transparent 60%),
-        linear-gradient(145deg, var(--card), var(--card-2));
-      box-shadow: var(--shadow);
-      display:grid; place-items:center; font-weight:700; color:var(--muted);
-    }
-    @media (max-width:860px){
-      .hero{ grid-template-columns:1fr; padding:18px }
-      .hero-side{ order:-1; aspect-ratio: 16/9 }
-    }
-
-    /* Search + Filters */
-    .toolbar{
-      max-width:1100px; margin:22px auto 0; padding:0 18px 4px;
-      display:flex; gap:10px; align-items:stretch; flex-wrap:wrap;
-    }
-    .input{
-      flex:1 1 280px; background:var(--card); border:var(--border); border-radius:12px; color:var(--text);
-      padding:12px 14px; outline:none; font-weight:600;
-    }
-    .select{
-      background:var(--card); border:var(--border); border-radius:12px; color:var(--text);
-      padding:12px 14px; outline:none; font-weight:600; min-width:180px;
-    }
-
-    /* Cards */
-    .grid{
-      max-width:1100px; margin:16px auto 0; padding:0 18px 40px;
-      display:grid; gap:16px; grid-template-columns: repeat(12, 1fr);
-    }
-    .card{
-      grid-column: span 4; min-width: 0;
-      background: linear-gradient(145deg, var(--card), var(--card-2));
-      border:var(--border); border-radius:16px; overflow:hidden; position:relative; transition:.18s;
-    }
-    .card:hover{ transform: translateY(-2px) }
-    .card-header{ padding:16px 16px 0; display:flex; align-items:center; gap:10px }
-    .tag{ font-size:.75rem; color:#0b1220; background:linear-gradient(145deg,var(--primary),var(--primary-2)); padding:6px 10px; border-radius:999px; font-weight:800 }
-    .card-title{ padding:8px 16px 0; font-weight:800; letter-spacing:.2px }
-    .card-desc{ padding:8px 16px; color:var(--muted); min-height:60px }
-    .card-actions{ padding:12px 16px 16px; display:flex; gap:8px; flex-wrap:wrap }
-    .link{ text-decoration:none }
-    .chip{
-      padding:10px 12px; border-radius:10px; font-weight:700; border:var(--border); background:var(--bg-soft);
-      color:var(--text); display:inline-flex; align-items:center; gap:8px; transition:.2s;
-    }
-    .chip:hover{ background:var(--card-2) }
-    .chip.primary{ border:none; background:linear-gradient(145deg, var(--primary), var(--primary-2)); color:#0b1220 }
-
-    @media (max-width:1050px){ .card{ grid-column: span 6 } }
-    @media (max-width:680px){ .card{ grid-column: span 12 } }
-
-    /* Sections */
-    .section{
-      max-width:1100px; margin:0 auto; padding:0 18px 46px;
-    }
-    .h2{ margin:18px 0 10px; font-size:1.6rem }
-    .muted{ color:var(--muted) }
-
-    /* Credits */
-    .credits{
-      display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:14px; margin-top:12px
-    }
-    .person{
-      background:var(--card); border:var(--border); border-radius:14px; padding:12px; display:flex; gap:10px; align-items:center
-    }
-    .avatar{
-      width:42px; height:42px; border-radius:10px; background:var(--card-2); display:grid; place-items:center; font-weight:800
-    }
-    .name{ font-weight:700 }
-    .role{ font-size:.85rem; color:var(--muted) }
-
-    /* Footer */
-    footer{
-      border-top:var(--border); background:var(--bg-soft); margin-top:36px;
-    }
-    .foot-inner{
-      max-width:1100px; margin:0 auto; padding:18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px
-    }
-    .social{ display:flex; gap:10px }
-    .social a{
-      width:42px; height:42px; display:grid; place-items:center; border-radius:10px; text-decoration:none;
-      background:var(--card); border:var(--border); color:var(--text)
-    }
-    .social a:hover{ outline: var(--ring) }
-
-    /* Toast & Modal */
-    .toast{
-      position:fixed; right:16px; bottom:16px; background:var(--card); border:var(--border);
-      padding:12px 14px; border-radius:12px; box-shadow: var(--shadow); opacity:0; transform: translateY(10px);
-      transition:.2s; pointer-events:none; z-index:60
-    }
-    .toast.show{ opacity:1; transform: translateY(0) }
-    .modal{
-      position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; place-items:center; z-index:70;
-    }
-    .modal.open{ display:grid }
-    .modal-card{
-      width:min(560px, 92vw); background:var(--bg-soft); border:var(--border); border-radius:16px; box-shadow: var(--shadow); padding:18px
-    }
-    .modal-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:12px }
-
-    /* Focus visible */
-    :focus-visible{ outline: var(--ring) }
-
-    /* Simple icons (no lib) */
-    .i{ width:18px; height:18px; display:inline-block }
-    .i.sun{ background: conic-gradient(from 0deg, #0000 0 25%, #000 0 100%) }
-  </style>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>🐝</title>
+<script type=module>import{initializeApp}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";import{getAnalytics}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";import{getFirestore,collection,doc,updateDoc,increment,query,orderBy,limit,getDocs,onSnapshot}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";const firebaseConfig={apiKey:"AIzaSyAhxOGQMO9GExflLgyhzbBtZues_XAztUU",authDomain:"zerosp-e9bfd.firebaseapp.com",projectId:"zerosp-e9bfd",storageBucket:"zerosp-e9bfd.firebasestorage.app",messagingSenderId:"87828549082",appId:"1:87828549082:web:20ea54fc78d1b282fbc4e3",measurementId:"G-HCT4HXP1MF"},app=initializeApp(firebaseConfig),analytics=getAnalytics(app),db=getFirestore(app)</script>
+<meta name=description content="Plataforma ZeroSP — recursos, scripts e automações para agilizar tarefas acadêmicas.">
+<link rel=icon href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Ctext y='50%' x='50%' text-anchor='middle' dominant-baseline='central' font-size='44'%3EZ%3C/text%3E%3C/svg%3E">
+<meta property=og:title content="Plataforma ZeroSP">
+<meta property=og:description content="Recursos, scripts e automações para estudos.">
+<meta property=og:image content="https://ui-avatars.com/api/?name=ZeroSP&background=0D1117&color=fff&bold=true">
+<meta property=og:type content=website>
+<meta name=twitter:card content=summary_large_image>
+<style>:root{--bg:#0d0f14;--bg-soft:#12151d;--text:#e7e9ee;--muted:#a9b0be;--card:#121722;--card-2:#151b28;--primary:#6ee7b7;--primary-2:#34d399;--accent:#8ab4ff;--danger:#f87171;--ring:0 0 0 4px rgba(110,231,183,.25);--shadow:0 10px 30px rgba(0,0,0,.35);--border:1px solid rgba(255,255,255,.06);--radius:16px}.light{--bg:#f6f7fb;--bg-soft:#ffffff;--text:#0c1222;--muted:#475569;--card:#ffffff;--card-2:#f1f5f9;--primary:#0ea5e9;--primary-2:#0284c7;--accent:#111827;--danger:#dc2626;--ring:0 0 0 4px rgba(14,165,233,.2);--shadow:0 10px 30px rgba(2,6,23,.08);--border:1px solid rgba(2,6,23,.06)}*{box-sizing:border-box}body,html{height:100%}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 80% -20%,rgba(110,231,183,.12),transparent 60%),radial-gradient(1000px 500px at -10% 0,rgba(138,180,255,.1),transparent 50%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-soft) 85%,transparent);backdrop-filter:blur(10px);border-bottom:var(--border)}.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 18px}.brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.2px}.brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(145deg,var(--card),var(--card-2));border:var(--border);box-shadow:var(--shadow);font-weight:800}.nav-links{display:flex;gap:18px;align-items:center}.nav-links a{text-decoration:none;color:var(--muted);font-weight:600;font-size:.95rem;padding:8px 10px;border-radius:10px;transition:.2s}.nav-links a:focus,.nav-links a:hover{color:var(--text);background:var(--card-2)}.nav-actions{display:flex;gap:8px;align-items:center}.btn{appearance:none;border:var(--border);background:var(--card);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}.btn:hover{transform:translateY(-1px);background:var(--card-2)}.btn.primary{background:linear-gradient(145deg,var(--primary),var(--primary-2));color:#0b1220;border:none}.btn.primary:hover{filter:brightness(.98)}.icon-btn{width:42px;height:42px;border-radius:12px;display:grid;place-items:center}.hamb{display:none}@media (max-width:860px){.nav-links{display:none}.hamb{display:inline-grid}.drawer{display:block;position:fixed;inset:60px 0 auto 0;background:var(--bg-soft);border-bottom:var(--border);padding:12px;transform-origin:top;scale:0 1;opacity:0;transition:.2s}.drawer.open{scale:1 1;opacity:1}.drawer a{display:block;padding:14px 10px;color:var(--text);text-decoration:none;border-radius:10px}.drawer a:hover{background:var(--card-2)}}.hero{max-width:1100px;margin:32px auto 0;padding:24px 18px 0;display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center}.hero-card{background:linear-gradient(145deg,var(--card),var(--card-2));border:var(--border);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero h1{font-size:clamp(1.8rem, 2.8vw + 1rem, 3rem);margin:0 0 10px}.sub{color:var(--muted);line-height:1.6;margin:0 0 18px}.pill{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:#0b1220;padding:8px 12px;border-radius:999px;background:linear-gradient(145deg,var(--primary),var(--primary-2));margin-bottom:14px}.hero-side{aspect-ratio:4/3;border-radius:var(--radius);border:var(--border);background:radial-gradient(180px 80px at 80% 15%,rgba(110,231,183,.25),transparent 60%),radial-gradient(200px 90px at 0 90%,rgba(138,180,255,.25),transparent 60%),linear-gradient(145deg,var(--card),var(--card-2));box-shadow:var(--shadow);display:grid;place-items:center;font-weight:700;color:var(--muted)}@media (max-width:860px){.hero{grid-template-columns:1fr;padding:18px}.hero-side{order:-1;aspect-ratio:16/9}}.toolbar{max-width:1100px;margin:22px auto 0;padding:0 18px 4px;display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}.input{flex:1 1 280px;background:var(--card);border:var(--border);border-radius:12px;color:var(--text);padding:12px 14px;outline:0;font-weight:600}.select{background:var(--card);border:var(--border);border-radius:12px;color:var(--text);padding:12px 14px;outline:0;font-weight:600;min-width:180px}.grid{max-width:1100px;margin:16px auto 0;padding:0 18px 40px;display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}.card{grid-column:span 4;min-width:0;background:linear-gradient(145deg,var(--card),var(--card-2));border:var(--border);border-radius:16px;overflow:hidden;position:relative;transition:.18s}.card:hover{transform:translateY(-2px)}.card-header{padding:16px 16px 0;display:flex;align-items:center;gap:10px}.tag{font-size:.75rem;color:#0b1220;background:linear-gradient(145deg,var(--primary),var(--primary-2));padding:6px 10px;border-radius:999px;font-weight:800}.card-title{padding:8px 16px 0;font-weight:800;letter-spacing:.2px}.card-desc{padding:8px 16px;color:var(--muted);min-height:60px}.card-actions{padding:12px 16px 16px;display:flex;gap:8px;flex-wrap:wrap}.link{text-decoration:none}.chip{padding:10px 12px;border-radius:10px;font-weight:700;border:var(--border);background:var(--bg-soft);color:var(--text);display:inline-flex;align-items:center;gap:8px;transition:.2s}.chip:hover{background:var(--card-2)}.chip.primary{border:none;background:linear-gradient(145deg,var(--primary),var(--primary-2));color:#0b1220}@media (max-width:1050px){.card{grid-column:span 6}}@media (max-width:680px){.card{grid-column:span 12}}.section{max-width:1100px;margin:0 auto;padding:0 18px 46px}.h2{margin:18px 0 10px;font-size:1.6rem}.muted{color:var(--muted)}.credits{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:12px}.person{background:var(--card);border:var(--border);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center}.avatar{width:42px;height:42px;border-radius:10px;background:var(--card-2);display:grid;place-items:center;font-weight:800}.name{font-weight:700}.role{font-size:.85rem;color:var(--muted)}footer{border-top:var(--border);background:var(--bg-soft);margin-top:36px}.foot-inner{max-width:1100px;margin:0 auto;padding:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}.social{display:flex;gap:10px}.social a{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;text-decoration:none;background:var(--card);border:var(--border);color:var(--text)}.social a:hover{outline:var(--ring)}.toast{position:fixed;right:16px;bottom:16px;background:var(--card);border:var(--border);padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;z-index:60}.toast.show{opacity:1;transform:translateY(0)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:70}.modal.open{display:grid}.modal-card{width:min(560px,92vw);background:var(--bg-soft);border:var(--border);border-radius:16px;box-shadow:var(--shadow);padding:18px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}:focus-visible{outline:var(--ring)}.i{width:18px;height:18px;display:inline-block}.i.sun{background:conic-gradient(from 0deg,#0000 0 25%,#000 0 100%)}</style>
 </head>
-
-  <!-- Navbar -->
-  <header class="nav" role="banner">
-    <div class="nav-inner">
-      <a class="brand" href="#top" aria-label="Início">
-    
-      </a>
-
-      <nav class="nav-links" aria-label="Primária">
-        <a href="#recursos">Recursos</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#creditos">Créditos</a>
-      </nav>
-
-
-    <div id="drawer" class="drawer" role="navigation" aria-label="Menu móvel">
-
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero" id="top">
-    <div class="hero-card">
-      <span class="pill">⚡</span>
-      <h1>Colmeia</h1>
-      <p class="sub">Bem-vindo à ZeroSP — uma plataforma criada para apoiar estudantes no aprendizado de tecnologia e no aumento da produtividade.</p>
-      <div style="display:flex; gap:10px; flex-wrap:wrap">
-        <a class="btn primary" href="#recursos">Explorar Recursos</a>
-        <button class="btn" id="copyLink">Copiar Link</button>
-      </div>
-    </div>
-    <div class="hero-side">Painel</div>
-  </section>
-
-  <!-- Toolbar -->
-  <div class="toolbar" aria-label="Busca e filtros">
-    <input id="search" class="input" type="search" placeholder="Buscar recurso (ex.: Khan, redação, voz) — /" aria-label="Buscar">
-    <select id="filter" class="select" aria-label="Filtrar por categoria">
-      <option value="all">Todas as categorias</option>
-      <option value="plataforma">Plataformas</option>
-      <option value="redacao">Redação</option>
-      <option value="voz">Voz / Fala</option>
-      <option value="util">Úteis</option>
-    </select>
-  </div>
-
-  <!-- Cards -->
-  <main id="recursos" class="grid" aria-live="polite"></main>
-
-  <!-- Sobre -->
-  <section id="sobre" class="section">
-    <h2 class="h2">Sobre</h2>
-    <p class="muted">Plataforma educacional focada em produtividade, aprendizado digital e organização para estudantes.
-    </p>
-  </section>
-
-  <!-- Créditos -->
-  <section id="creditos" class="section">
-    <h2 class="h2">Créditos</h2>
-    <div class="credits" id="owners"></div>
-    <div class="credits" id="coleaders"></div>
-    <div class="credits" id="developers"></div>
-  </section>
-
-
-
-  <!-- Rodapé -->
-  <footer>
-    <div class="foot-inner">
-      <span class="muted">© 2025 🐝 Bee owl</span>
-      <div class="social">
-        <a href="#" title="Website">🌐</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Toast -->
-  <div id="toast" class="toast" role="status" aria-live="polite">Link copiado!</div>
-
-
-  <!-- Modal de Vídeo -->
-<div id="videoModal" class="modal" aria-hidden="true" aria-label="Vídeo Tutorial">
-  <div class="modal-card" style="max-width:700px">
-    <iframe id="videoFrame" width="100%" height="400" src="" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-    <div class="modal-actions">
-      <button id="closeVideo" class="btn">Fechar</button>
-    </div>
-  </div>
+<header class=nav role=banner>
+<div class=nav-inner>
+<a class=brand href=#top aria-label=Início>
+</a>
+<nav class=nav-links aria-label=Primária>
+<a href=#recursos>Recursos</a>
+<a href=#sobre>Sobre</a>
+<a href=#creditos>Créditos</a>
+</nav>
+<div class=nav-actions>
+<button id=toggleTheme class="btn icon-btn" title="Alternar tema" aria-label="Alternar tema">🍯 </button>
+<button id=openDonate class=btn>🐝</button>
+<button id=hamb class="btn icon-btn hamb" aria-label=Menu>☰</button>
 </div>
-  <script>
-      // --- Adiciona botão de vídeo em cada card ---
-  function addVideoButtons() {
-    document.querySelectorAll('.card').forEach((card, index) => {
-      const videoURL = LINKS[index]?.video;
-      if(videoURL){
-        const btn = document.createElement('button');
-        btn.className = 'chip video-btn';
-        btn.setAttribute('data-video', videoURL);
-        btn.textContent = '❓Como Usar';
-        card.querySelector('.card-actions').appendChild(btn);
-      }
-    });
-  }
-  
-  function renderTopScripts(scripts){
-  // Exemplo: atualiza o "hero-side" com o script mais visto
-  const heroSide = document.querySelector('.hero-side');
-  if(scripts.length){
-    heroSide.textContent = scripts[0].title;
-  }
-}
+</div>
+<div id=drawer class=drawer role=navigation aria-label="Menu móvel">
+</div>
+</header>
+<section class=hero id=top>
+<div class=hero-card>
+<span class=pill>🎓</span>
+<h1></h1>
+<p class=sub>“Entrega teus caminhos ao Senhor, confia nele, e ele tudo fará.”</p>
+<div style=display:flex;gap:10px;flex-wrap:wrap>
+<a class="btn primary" href=#recursos>Explorar Recursos</a>
+<button class=btn id=copyLink>Copiar Link</button>
+</div>
+</div>
+<div class=hero-side>Painel</div>
+</section>
+<div class=toolbar aria-label="Busca e filtros">
+<input id=search class=input type=search placeholder="Buscar recurso (ex.: Khan, redação, voz) — /" aria-label=Buscar>
+<select id=filter class=select aria-label="Filtrar por categoria">
+<option value=all>Todas as categorias</option>
+<option value=plataforma>Plataformas</option>
+<option value=redacao>Redação</option>
+<option value=voz>Voz / Fala</option>
+<option value=util>Úteis</option>
+</select>
+</div>
+<main id=recursos class=grid aria-live=polite></main>
+<section id=sobre class=section>
+<h2 class=h2>Sobre</h2>
+<p class=muted>
+Bem-vindo à Bee owl — Plataforma educacional focada em produtividade, aprendizado digital e organização para estudantes.
+</p>
+</section>
+<section id=creditos class=section>
+<h2 class=h2>Créditos</h2>
+<div class=credits id=owners></div>
+<div class=credits id=coleaders></div>
+<div class=credits id=developers></div>
+</section>
+<footer>
+<div class=foot-inner>
+<span class=muted>© 2025 🐝 Bee owl</span>
+<div class=social>
+<a href=#>🌐</a>
+<a href=#>💬</a>
+<a href=#>💚</a>
+</div>
+</div>
+</footer>
+<div id=toast class=toast role=status aria-live=polite>Link copiado!</div>
+<div id=donateModal class=modal aria-hidden=true aria-label=Doação>
+<div class=modal-card>
+<h3 style="margin:0 0 8px">💚</h3>
+<p class=muted>.</p>
+<div class=modal-actions>
+<a class="btn primary" href="" target=_blank rel=noopener>.</a>
+<button id=closeDonate class=btn>Fechar</button>
+</div>
+</div>
+</div>
+<div id=videoModal class=modal aria-hidden=true aria-label="Vídeo Tutorial">
+<div class=modal-card style=max-width:700px>
+<iframe id=videoFrame width=100% height=400 src="" frameborder=0 allowfullscreen allow="autoplay; encrypted-media"></iframe>
+<div class=modal-actions>
+<button id=closeVideo class=btn>Fechar</button>
+</div>
+</div>
+</div>
+<script>function addVideoButtons(){document.querySelectorAll(".card").forEach(((e,t)=>{const a=LINKS[t]?.video;if(a){const t=document.createElement("button");t.className="chip video-btn",t.setAttribute("data-video",a),t.textContent="Como Usar",e.querySelector(".card-actions").appendChild(t)}}))}function renderTopScripts(e){const t=document.querySelector(".hero-side");e.length&&(t.textContent=e[0].title)}addVideoButtons();const videoModal=document.getElementById("videoModal"),videoFrame=document.getElementById("videoFrame"),closeVideo=document.getElementById("closeVideo");document.addEventListener("click",(e=>{if(e.target.classList.contains("video-btn")){const t=e.target.getAttribute("data-video");t&&(videoFrame.src=t+"?autoplay=1",videoModal.classList.add("open"),videoModal.setAttribute("aria-hidden","false"))}})),closeVideo.addEventListener("click",(()=>{videoFrame.src="",videoModal.classList.remove("open"),videoModal.setAttribute("aria-hidden","true")})),videoModal.addEventListener("click",(e=>{e.target===videoModal&&(videoFrame.src="",videoModal.classList.remove("open"),videoModal.setAttribute("aria-hidden","true"))}));const LINKS=[{id:"Khan Academy",title:"Khan Academy",desc:"Ferramentas auxiliares para a plataforma Khan Academy.",url:"https://github.com/Mafaxhack/KhanW?tab=readme-ov-file",category:"plataforma",video:"https://www.youtube.com/embed/vIfeqo8hd8c",actions:[{label:"Abrir",url:"https://github.com/Mafaxhack/KhanW?tab=readme-ov-file",primary:!0}]}],OWNERS=[{name:"Mafa",avatar:""},{name:"Paulo",avatar:""}],COLEADERS=[],DEVELOPERS=[],$=e=>document.querySelector(e),$$=e=>document.querySelectorAll(e);function toast(e,t=2200){const a=$("#toast");a.textContent=e,a.classList.add("show"),setTimeout((()=>a.classList.remove("show")),t)}function renderPeople(e,t,a){const n=document.querySelector(e);if(0===a.length)return;const o=document.createElement("h3");o.className="h2",o.textContent=t,n.parentElement.insertBefore(o,n),n.innerHTML=a.map((e=>`\n  \t  <div class="person">\n   \t   <img alt="${e.name}" class="avatar" src="${e.avatar||avatarFor(e.name)}" />\n   \t   <div>\n   \t     <div class="name">${e.name}</div>\n  \t      <div class="role muted">${t.slice(0,-1)}</div>\n   \t   </div>\n  \t  </div>\n\t  `)).join("")}function avatarFor(e){return`https://ui-avatars.com/api/?name=${encodeURIComponent(e)}&background=random&bold=true`}const grid=$("#recursos");function renderCards(e){grid.innerHTML="",0!==e.length?(e.forEach((e=>{const t=document.createElement("article");t.className="card",t.innerHTML=`\n      <div class="card-header">\n        <span class="tag">${e.category}</span>\n      </div>\n      <h3 class="card-title">${e.title}</h3>\n      <p class="card-desc">${e.desc}</p>\n      <div class="card-actions">\n        ${e.actions?.map((e=>`<a class="link" href="${e.url}" target="_blank" rel="noopener"><span class="chip ${e.primary?"primary":""}">${e.label}</span></a>`)).join("")??""}\n        <button class="chip" data-copy="${e.url}">Copiar link</button>\n      </div>\n    `,grid.appendChild(t),t.querySelectorAll(".card-actions a.link").forEach((e=>{e.addEventListener("click",(async()=>{const t=LINKS.find((t=>t.url===e.href||t.actions.some((t=>t.url===e.href))));if(t){const e=doc(db,"scripts",t.id);await updateDoc(e,{views:increment(1)})}}))}))})),grid.querySelectorAll("[data-copy]").forEach((e=>{e.addEventListener("click",(()=>{navigator.clipboard.writeText(e.getAttribute("data-copy")||""),toast("Link copiado!")}))})),addVideoButtons()):grid.innerHTML='<div class="card" style="grid-column: span 12"><div class="card-desc">Nenhum recurso encontrado.</div></div>'}const input=$("#search"),filter=$("#filter");function applyFilter(){const e=(input.value||"").toLowerCase().trim(),t=filter.value;renderCards(LINKS.filter((a=>{const n="all"===t||a.category===t,o=!e||a.title.toLowerCase().includes(e)||a.desc.toLowerCase().includes(e);return n&&o})))}input.addEventListener("input",applyFilter),filter.addEventListener("change",applyFilter),window.addEventListener("keydown",(e=>{"/"===e.key&&document.activeElement!==input&&(e.preventDefault(),input.focus())}));const hamb=$("#hamb"),drawer=$("#drawer");hamb?.addEventListener("click",(()=>drawer.classList.toggle("open")));const donateModal=$("#donateModal"),openDonate=$("#openDonate"),drawerDonate=$("#drawerDonate"),closeDonate=$("#closeDonate");function openDonateModal(){donateModal.classList.add("open"),donateModal.setAttribute("aria-hidden","false")}function closeDonateModal(){donateModal.classList.remove("open"),donateModal.setAttribute("aria-hidden","true")}function renderPeople(e,t,a){const n=document.querySelector(e);if(0===a.length)return;const o=document.createElement("h3");o.className="h2",o.textContent=t,n.parentElement.insertBefore(o,n),n.innerHTML=a.map((e=>`\n        <div class="person">\n          <img alt="${e.name}" class="avatar" src="${e.avatar||avatarFor(e.name)}" />\n          <div>\n            <div class="name">${e.name}</div>\n            <div class="role muted">${t.slice(0,-1)}</div>\n          </div>\n        </div>\n      `)).join("")}openDonate.addEventListener("click",openDonateModal),drawerDonate?.addEventListener("click",(e=>{e.preventDefault(),drawer.classList.remove("open"),openDonateModal()})),closeDonate.addEventListener("click",closeDonateModal),donateModal.addEventListener("click",(e=>{e.target===donateModal&&closeDonateModal()})),$("#copyLink").addEventListener("click",(()=>{navigator.clipboard.writeText(location.href),toast("Link do site copiado!")})),renderCards(LINKS),renderPeople("#owners","Fundadores",OWNERS),renderPeople("#coleaders","Co-Fundadores",COLEADERS),renderPeople("#developers","Desenvolvedores",DEVELOPERS),applyFilter();const topQuery=query(collection(db,"scripts"),orderBy("views","desc"),limit(5));onSnapshot(topQuery,(e=>{renderTopScripts(e.docs.map((e=>e.data())))}))</script>
 
-
-  addVideoButtons();
-
-  // --- Modal ---
-  const videoModal = document.getElementById('videoModal');
-  const videoFrame = document.getElementById('videoFrame');
-  const closeVideo = document.getElementById('closeVideo');
-
-  document.addEventListener('click', e => {
-    if(e.target.classList.contains('video-btn')){
-      const videoURL = e.target.getAttribute('data-video');
-      if(videoURL){
-        videoFrame.src = videoURL + "?autoplay=1";
-        videoModal.classList.add('open');
-        videoModal.setAttribute('aria-hidden','false');
-      }
-    }
-  });
-
-  closeVideo.addEventListener('click', () => {
-    videoFrame.src = "";
-    videoModal.classList.remove('open');
-    videoModal.setAttribute('aria-hidden','true');
-  });
-
-  videoModal.addEventListener('click', e => {
-    if(e.target === videoModal){
-      videoFrame.src = "";
-      videoModal.classList.remove('open');
-      videoModal.setAttribute('aria-hidden','true');
-    }
-  });
-    // --------- DATA (edite aqui) ----------
-    const LINKS = [
-      {
-	id: "Khan Academy",
-        title: "Khan Academy",
-        desc: "Ferramentas auxiliares para a plataforma Khan Academy.",
-        url: "https://github.com/Mafaxhack/KhanW?tab=readme-ov-file",
-        category: "plataforma",
-	video: "https://www.youtube.com/embed/vIfeqo8hd8c",
-        actions: [{label:"Abrir", url:"https://github.com/Mafaxhack/KhanW?tab=readme-ov-file", primary:true}]
-      },
-      {
-	id: "Tarefa SP",
-        title: "Tarefa SP",
-        desc: "Automatizações e atalhos úteis para tarefas.",
-        url: "https://taskitos.cupiditys.lol/",
-        category: "plataforma",
-        actions: [{label:"Abrir", url:"https://taskitos.cupiditys.lol/", primary:true}]
-      },
-      {
-	id: "Redação Paulista",
-        title: "Redação Paulista",
-        desc: "Ferramentas de o para redações e textos.",
-        url: "https://redacao.cupiditys.lol/",
-        category: "redacao",
-        actions: [{label:"GitHub", url:"https://redacao.cupiditys.lol/", primary:true}]
-      },
-      {
-	id: "SPeak (Texto → Voz)",
-        title: "SPeak (Texto → Voz)",
-        desc: "Gere fala a partir de texto para apresentações e estudos.",
-        url: "https://speakify.cupiditys.lol/",
-        category: "voz",
-        actions: [{label:"Abrir", url:"https://speakify.cupiditys.lol/", primary:true}]
-      }
-    ];
-
-    const OWNERS = [
-      { name:"Mafa", avatar:"https://p16-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/8ee547aca8d125ba38499960cfb0600c~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=c5de6e01&x-expires=1757469600&x-signature=XQzwJdFFD7qn0%2FCXgQzgOJrK9l0%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" },
-      { name:"Paulo", avatar:"https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/9faec34f9ed2bc34e139edb6a188a7a8~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=2dd07ff1&x-expires=1757469600&x-signature=WzPhPvV7t0knsi8LGIkydT7JFd4%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" }
-    ];
-    const COLEADERS = [
-      { name:"Pedro", avatar:"https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/89266555e0332b9d0337a44f9113a59a~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=ea91183c&x-expires=1757469600&x-signature=qA7pRskqngPXvL1GICDMPFBT7iQ%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" },
-      { name:"Gaabzin", avatar:"https://p77-sign-va.tiktokcdn.com/tos-maliva-avt-0068/b0025eac7da494ebb5d334c1b311e9f3~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=c2fc6ca6&x-expires=1757469600&x-signature=JIwTZUgC0XzsS0QKv89Mx%2B5o40g%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva" }
-    ];
-    const DEVELOPERS = [
-      // {name:"SeuDev", avatar:""},
-    ];
-
-    // --------- UI helpers ----------
-    const $ = s => document.querySelector(s);
-    const $$ = s => document.querySelectorAll(s);
-
-    function toast(msg, timeout=2200){
-      const t = $('#toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(()=> t.classList.remove('show'), timeout);
-    }
-     function renderPeople(containerSel, title, arr){
- 	 const container = document.querySelector(containerSel);
-	  if(arr.length===0) return;
-  	const label = document.createElement('h3');
- 	 label.className = 'h2';
-  	label.textContent = title;
- 	 container.parentElement.insertBefore(label, container);
-
- 	 container.innerHTML = arr.map(p=>`
-  	  <div class="person">
-   	   <img alt="${p.name}" class="avatar" src="${p.avatar || avatarFor(p.name)}" />
-   	   <div>
-   	     <div class="name">${p.name}</div>
-  	      <div class="role muted">${title.slice(0,-1)}</div>
-   	   </div>
-  	  </div>
-	  `).join('');
-	}
-
-    function avatarFor(n){
-      return `https://ui-avatars.com/api/?name=${encodeURIComponent(n)}&background=random&bold=true`;
-    }
-
-    // --------- Render Cards ----------
-    const grid = $('#recursos');
-function renderCards(list){
-  grid.innerHTML = '';
-  if(list.length === 0){
-    grid.innerHTML = `<div class="card" style="grid-column: span 12"><div class="card-desc">Nenhum recurso encontrado.</div></div>`;
-    return;
-  }
-
-  list.forEach(item=>{
-    const el = document.createElement('article');
-    el.className = 'card';
-    el.innerHTML = `
-      <div class="card-header">
-        <span class="tag">${item.category}</span>
-      </div>
-      <h3 class="card-title">${item.title}</h3>
-      <p class="card-desc">${item.desc}</p>
-      <div class="card-actions">
-        ${item.actions?.map(a=>`<a class="link" href="${a.url}" target="_blank" rel="noopener"><span class="chip ${a.primary?'primary':''}">${a.label}</span></a>`).join('') ?? ''}
-        <button class="chip" data-copy="${item.url}">Copiar link</button>
-      </div>
-    `;
-    grid.appendChild(el);
-
-    // --------- Search / Filter ----------
-    const input = $('#search');
-    const filter = $('#filter');
-
-    function applyFilter(){
-      const q = (input.value || '').toLowerCase().trim();
-      const f = filter.value;
-      const out = LINKS.filter((i)=>{
-        const okCat = f === 'all' ? true : (i.category === f);
-        const okText = !q || (i.title.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q));
-        return okCat && okText;
-      });
-      renderCards(out);
-    }
-
-    input.addEventListener('input', applyFilter);
-    filter.addEventListener('change', applyFilter);
-
-    // atalhos: "/" foca busca
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === '/' && document.activeElement !== input){
-        e.preventDefault(); input.focus();
-      }
-    });
-	  
-    // --- Incrementa views apenas nos links "Abrir" / "GitHub"
-    el.querySelectorAll('.card-actions a.link').forEach(link => {
-      link.addEventListener('click', async () => {
-        const script = LINKS.find(l => l.url === link.href || l.actions.some(a => a.url === link.href));
-        if(script){
-          const scriptRef = doc(db, "scripts", script.id);
-          await updateDoc(scriptRef, { views: increment(1) });
-        }
-      });
-    });
-  });
-
-  // bind copy buttons
-  grid.querySelectorAll('[data-copy]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      navigator.clipboard.writeText(btn.getAttribute('data-copy')||'');
-      toast('Link copiado!');
-    });
-  });
-
-  addVideoButtons();
-}
-
-
-    // --------- Theme ----------
-
-
-    // --------- Drawer mobile ----------
-    const hamb = $('#hamb'), drawer = $('#drawer');
-    hamb?.addEventListener('click', ()=> drawer.classList.toggle('open'));
-
-    // --------- Donate Modal ----------
-    const donateModal = $('#donateModal');
-    const openDonate = $('#openDonate');
-    const drawerDonate = $('#drawerDonate');
-    const closeDonate = $('#closeDonate');
-
-    function openDonateModal(){ donateModal.classList.add('open'); donateModal.setAttribute('aria-hidden','false'); }
-    function closeDonateModal(){ donateModal.classList.remove('open'); donateModal.setAttribute('aria-hidden','true'); }
-
-    openDonate.addEventListener('click', openDonateModal);
-    drawerDonate?.addEventListener('click', (e)=>{ e.preventDefault(); drawer.classList.remove('open'); openDonateModal(); });
-    closeDonate.addEventListener('click', closeDonateModal);
-    donateModal.addEventListener('click', (e)=>{ if(e.target === donateModal) closeDonateModal(); });
-
-    // --------- Copy page link ----------
-    $('#copyLink').addEventListener('click', ()=>{
-      navigator.clipboard.writeText(location.href);
-      toast('Link do site copiado!');
-    });
-
-    // --------- Credits ----------
-    function renderPeople(containerSel, title, arr){
-      const container = document.querySelector(containerSel);
-      if(arr.length===0) return;
-      const label = document.createElement('h3');
-      label.className = 'h2';
-      label.textContent = title;
-      container.parentElement.insertBefore(label, container);
-
-      container.innerHTML = arr.map(p=>`
-        <div class="person">
-          <img alt="${p.name}" class="avatar" src="${p.avatar || avatarFor(p.name)}" />
-          <div>
-            <div class="name">${p.name}</div>
-            <div class="role muted">${title.slice(0,-1)}</div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // --------- Init ----------
-    renderCards(LINKS);
-    renderPeople('#owners', 'Fundadores', OWNERS);
-    renderPeople('#coleaders', 'Co-Fundadores', COLEADERS);
-    renderPeople('#developers', 'Desenvolvedores', DEVELOPERS);
-    applyFilter();
-	
-    // Para atualizar o painel ZeroSP em tempo real
-const topQuery = query(collection(db, "scripts"), orderBy("views", "desc"), limit(5));
-onSnapshot(topQuery, snapshot => {
-  const top = snapshot.docs.map(doc => doc.data());
-  renderTopScripts(top);
-});
-
-
-  </script>
-</body>
 </html>
