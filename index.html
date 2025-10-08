@@ -1,101 +1,2239 @@
 <!doctype html>
-<html lang=pt-BR>
+<html lang="pt-BR">
 <head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>🐝</title>
-<script type=module>import{initializeApp}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";import{getAnalytics}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";import{getFirestore,collection,doc,updateDoc,increment,query,orderBy,limit,getDocs,onSnapshot}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";const firebaseConfig={apiKey:"AIzaSyAhxOGQMO9GExflLgyhzbBtZues_XAztUU",authDomain:"zerosp-e9bfd.firebaseapp.com",projectId:"zerosp-e9bfd",storageBucket:"zerosp-e9bfd.firebasestorage.app",messagingSenderId:"87828549082",appId:"1:87828549082:web:20ea54fc78d1b282fbc4e3",measurementId:"G-HCT4HXP1MF"},app=initializeApp(firebaseConfig),analytics=getAnalytics(app),db=getFirestore(app)</script>
-<meta name=description content="Plataforma ZeroSP — recursos, scripts e automações para agilizar tarefas acadêmicas.">
-<link rel=icon href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Ctext y='50%' x='50%' text-anchor='middle' dominant-baseline='central' font-size='44'%3EZ%3C/text%3E%3C/svg%3E">
-<meta property=og:title content="Plataforma ZeroSP">
-<meta property=og:description content="Recursos, scripts e automações para estudos.">
-<meta property=og:image content="https://ui-avatars.com/api/?name=ZeroSP&background=0D1117&color=fff&bold=true">
-<meta property=og:type content=website>
-<meta name=twitter:card content=summary_large_image>
-<style>:root{--bg:#0d0f14;--bg-soft:#12151d;--text:#e7e9ee;--muted:#a9b0be;--card:#121722;--card-2:#151b28;--primary:#6ee7b7;--primary-2:#34d399;--accent:#8ab4ff;--danger:#f87171;--ring:0 0 0 4px rgba(110,231,183,.25);--shadow:0 10px 30px rgba(0,0,0,.35);--border:1px solid rgba(255,255,255,.06);--radius:16px}.light{--bg:#f6f7fb;--bg-soft:#ffffff;--text:#0c1222;--muted:#475569;--card:#ffffff;--card-2:#f1f5f9;--primary:#0ea5e9;--primary-2:#0284c7;--accent:#111827;--danger:#dc2626;--ring:0 0 0 4px rgba(14,165,233,.2);--shadow:0 10px 30px rgba(2,6,23,.08);--border:1px solid rgba(2,6,23,.06)}*{box-sizing:border-box}body,html{height:100%}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 80% -20%,rgba(110,231,183,.12),transparent 60%),radial-gradient(1000px 500px at -10% 0,rgba(138,180,255,.1),transparent 50%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-soft) 85%,transparent);backdrop-filter:blur(10px);border-bottom:var(--border)}.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 18px}.brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.2px}.brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(145deg,var(--card),var(--card-2));border:var(--border);box-shadow:var(--shadow);font-weight:800}.nav-links{display:flex;gap:18px;align-items:center}.nav-links a{text-decoration:none;color:var(--muted);font-weight:600;font-size:.95rem;padding:8px 10px;border-radius:10px;transition:.2s}.nav-links a:focus,.nav-links a:hover{color:var(--text);background:var(--card-2)}.nav-actions{display:flex;gap:8px;align-items:center}.btn{appearance:none;border:var(--border);background:var(--card);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}.btn:hover{transform:translateY(-1px);background:var(--card-2)}.btn.primary{background:linear-gradient(145deg,var(--primary),var(--primary-2));color:#0b1220;border:none}.btn.primary:hover{filter:brightness(.98)}.icon-btn{width:42px;height:42px;border-radius:12px;display:grid;place-items:center}.hamb{display:none}@media (max-width:860px){.nav-links{display:none}.hamb{display:inline-grid}.drawer{display:block;position:fixed;inset:60px 0 auto 0;background:var(--bg-soft);border-bottom:var(--border);padding:12px;transform-origin:top;scale:0 1;opacity:0;transition:.2s}.drawer.open{scale:1 1;opacity:1}.drawer a{display:block;padding:14px 10px;color:var(--text);text-decoration:none;border-radius:10px}.drawer a:hover{background:var(--card-2)}}.hero{max-width:1100px;margin:32px auto 0;padding:24px 18px 0;display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center}.hero-card{background:linear-gradient(145deg,var(--card),var(--card-2));border:var(--border);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero h1{font-size:clamp(1.8rem, 2.8vw + 1rem, 3rem);margin:0 0 10px}.sub{color:var(--muted);line-height:1.6;margin:0 0 18px}.pill{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:#0b1220;padding:8px 12px;border-radius:999px;background:linear-gradient(145deg,var(--primary),var(--primary-2));margin-bottom:14px}.hero-side{aspect-ratio:4/3;border-radius:var(--radius);border:var(--border);background:radial-gradient(180px 80px at 80% 15%,rgba(110,231,183,.25),transparent 60%),radial-gradient(200px 90px at 0 90%,rgba(138,180,255,.25),transparent 60%),linear-gradient(145deg,var(--card),var(--card-2));box-shadow:var(--shadow);display:grid;place-items:center;font-weight:700;color:var(--muted)}@media (max-width:860px){.hero{grid-template-columns:1fr;padding:18px}.hero-side{order:-1;aspect-ratio:16/9}}.toolbar{max-width:1100px;margin:22px auto 0;padding:0 18px 4px;display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}.input{flex:1 1 280px;background:var(--card);border:var(--border);border-radius:12px;color:var(--text);padding:12px 14px;outline:0;font-weight:600}.select{background:var(--card);border:var(--border);border-radius:12px;color:var(--text);padding:12px 14px;outline:0;font-weight:600;min-width:180px}.grid{max-width:1100px;margin:16px auto 0;padding:0 18px 40px;display:grid;gap:16px;grid-template-columns:repeat(12,1fr)}.card{grid-column:span 4;min-width:0;background:linear-gradient(145deg,var(--card),var(--card-2));border:var(--border);border-radius:16px;overflow:hidden;position:relative;transition:.18s}.card:hover{transform:translateY(-2px)}.card-header{padding:16px 16px 0;display:flex;align-items:center;gap:10px}.tag{font-size:.75rem;color:#0b1220;background:linear-gradient(145deg,var(--primary),var(--primary-2));padding:6px 10px;border-radius:999px;font-weight:800}.card-title{padding:8px 16px 0;font-weight:800;letter-spacing:.2px}.card-desc{padding:8px 16px;color:var(--muted);min-height:60px}.card-actions{padding:12px 16px 16px;display:flex;gap:8px;flex-wrap:wrap}.link{text-decoration:none}.chip{padding:10px 12px;border-radius:10px;font-weight:700;border:var(--border);background:var(--bg-soft);color:var(--text);display:inline-flex;align-items:center;gap:8px;transition:.2s}.chip:hover{background:var(--card-2)}.chip.primary{border:none;background:linear-gradient(145deg,var(--primary),var(--primary-2));color:#0b1220}@media (max-width:1050px){.card{grid-column:span 6}}@media (max-width:680px){.card{grid-column:span 12}}.section{max-width:1100px;margin:0 auto;padding:0 18px 46px}.h2{margin:18px 0 10px;font-size:1.6rem}.muted{color:var(--muted)}.credits{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:12px}.person{background:var(--card);border:var(--border);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center}.avatar{width:42px;height:42px;border-radius:10px;background:var(--card-2);display:grid;place-items:center;font-weight:800}.name{font-weight:700}.role{font-size:.85rem;color:var(--muted)}footer{border-top:var(--border);background:var(--bg-soft);margin-top:36px}.foot-inner{max-width:1100px;margin:0 auto;padding:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}.social{display:flex;gap:10px}.social a{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;text-decoration:none;background:var(--card);border:var(--border);color:var(--text)}.social a:hover{outline:var(--ring)}.toast{position:fixed;right:16px;bottom:16px;background:var(--card);border:var(--border);padding:12px 14px;border-radius:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;z-index:60}.toast.show{opacity:1;transform:translateY(0)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:70}.modal.open{display:grid}.modal-card{width:min(560px,92vw);background:var(--bg-soft);border:var(--border);border-radius:16px;box-shadow:var(--shadow);padding:18px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}:focus-visible{outline:var(--ring)}.i{width:18px;height:18px;display:inline-block}.i.sun{background:conic-gradient(from 0deg,#0000 0 25%,#000 0 100%)}</style>
-</head>
-<header class=nav role=banner>
-<div class=nav-inner>
-<a class=brand href=#top aria-label=Início>
-</a>
-<nav class=nav-links aria-label=Primária>
-<a href=#recursos>Recursos</a>
-<a href=#sobre>Sobre</a>
-<a href=#creditos>Créditos</a>
-</nav>
-<div class=nav-actions>
-<button id=toggleTheme class="btn icon-btn" title="Alternar tema" aria-label="Alternar tema">🍯 </button>
-<button id=openDonate class=btn>🐝</button>
-<button id=hamb class="btn icon-btn hamb" aria-label=Menu>☰</button>
-</div>
-</div>
-<div id=drawer class=drawer role=navigation aria-label="Menu móvel">
-</div>
-</header>
-<section class=hero id=top>
-<div class=hero-card>
-<span class=pill>🎓</span>
-<h1></h1>
-<p class=sub>“Entrega teus caminhos ao Senhor, confia nele, e ele tudo fará.”</p>
-<div style=display:flex;gap:10px;flex-wrap:wrap>
-<a class="btn primary" href=#recursos>Explorar Recursos</a>
-<button class=btn id=copyLink>Copiar Link</button>
-</div>
-</div>
-<div class=hero-side>Painel</div>
-</section>
-<div class=toolbar aria-label="Busca e filtros">
-<input id=search class=input type=search placeholder="Buscar recurso (ex.: Khan, redação, voz) — /" aria-label=Buscar>
-<select id=filter class=select aria-label="Filtrar por categoria">
-<option value=all>Todas as categorias</option>
-<option value=plataforma>Plataformas</option>
-<option value=redacao>Redação</option>
-<option value=voz>Voz / Fala</option>
-<option value=util>Úteis</option>
-</select>
-</div>
-<main id=recursos class=grid aria-live=polite></main>
-<section id=sobre class=section>
-<h2 class=h2>Sobre</h2>
-<p class=muted>
-Bem-vindo à Bee owl — Plataforma educacional focada em produtividade, aprendizado digital e organização para estudantes.
-</p>
-</section>
-<section id=creditos class=section>
-<h2 class=h2>Créditos</h2>
-<div class=credits id=owners></div>
-<div class=credits id=coleaders></div>
-<div class=credits id=developers></div>
-</section>
-<footer>
-<div class=foot-inner>
-<span class=muted>© 2025 🐝 Bee owl</span>
-<div class=social>
-<a href=#>🌐</a>
-<a href=#>💬</a>
-<a href=#>💚</a>
-</div>
-</div>
-</footer>
-<div id=toast class=toast role=status aria-live=polite>Link copiado!</div>
-<div id=donateModal class=modal aria-hidden=true aria-label=Doação>
-<div class=modal-card>
-<h3 style="margin:0 0 8px">💚</h3>
-<p class=muted>.</p>
-<div class=modal-actions>
-<a class="btn primary" href="" target=_blank rel=noopener>.</a>
-<button id=closeDonate class=btn>Fechar</button>
-</div>
-</div>
-</div>
-<div id=videoModal class=modal aria-hidden=true aria-label="Vídeo Tutorial">
-<div class=modal-card style=max-width:700px>
-<iframe id=videoFrame width=100% height=400 src="" frameborder=0 allowfullscreen allow="autoplay; encrypted-media"></iframe>
-<div class=modal-actions>
-<button id=closeVideo class=btn>Fechar</button>
-</div>
-</div>
-</div>
-<script>function addVideoButtons(){document.querySelectorAll(".card").forEach(((e,t)=>{const a=LINKS[t]?.video;if(a){const t=document.createElement("button");t.className="chip video-btn",t.setAttribute("data-video",a),t.textContent="Como Usar",e.querySelector(".card-actions").appendChild(t)}}))}function renderTopScripts(e){const t=document.querySelector(".hero-side");e.length&&(t.textContent=e[0].title)}addVideoButtons();const videoModal=document.getElementById("videoModal"),videoFrame=document.getElementById("videoFrame"),closeVideo=document.getElementById("closeVideo");document.addEventListener("click",(e=>{if(e.target.classList.contains("video-btn")){const t=e.target.getAttribute("data-video");t&&(videoFrame.src=t+"?autoplay=1",videoModal.classList.add("open"),videoModal.setAttribute("aria-hidden","false"))}})),closeVideo.addEventListener("click",(()=>{videoFrame.src="",videoModal.classList.remove("open"),videoModal.setAttribute("aria-hidden","true")})),videoModal.addEventListener("click",(e=>{e.target===videoModal&&(videoFrame.src="",videoModal.classList.remove("open"),videoModal.setAttribute("aria-hidden","true"))}));const LINKS=[{id:"Khan Academy",title:"Khan Academy",desc:"Ferramentas auxiliares para a plataforma Khan Academy.",url:"https://github.com/Mafaxhack/KhanW?tab=readme-ov-file",category:"plataforma",video:"https://www.youtube.com/embed/vIfeqo8hd8c",actions:[{label:"Abrir",url:"https://github.com/Mafaxhack/KhanW?tab=readme-ov-file",primary:!0}]}],OWNERS=[{name:"Mafa",avatar:""},{name:"Paulo",avatar:""}],COLEADERS=[],DEVELOPERS=[],$=e=>document.querySelector(e),$$=e=>document.querySelectorAll(e);function toast(e,t=2200){const a=$("#toast");a.textContent=e,a.classList.add("show"),setTimeout((()=>a.classList.remove("show")),t)}function renderPeople(e,t,a){const n=document.querySelector(e);if(0===a.length)return;const o=document.createElement("h3");o.className="h2",o.textContent=t,n.parentElement.insertBefore(o,n),n.innerHTML=a.map((e=>`\n  \t  <div class="person">\n   \t   <img alt="${e.name}" class="avatar" src="${e.avatar||avatarFor(e.name)}" />\n   \t   <div>\n   \t     <div class="name">${e.name}</div>\n  \t      <div class="role muted">${t.slice(0,-1)}</div>\n   \t   </div>\n  \t  </div>\n\t  `)).join("")}function avatarFor(e){return`https://ui-avatars.com/api/?name=${encodeURIComponent(e)}&background=random&bold=true`}const grid=$("#recursos");function renderCards(e){grid.innerHTML="",0!==e.length?(e.forEach((e=>{const t=document.createElement("article");t.className="card",t.innerHTML=`\n      <div class="card-header">\n        <span class="tag">${e.category}</span>\n      </div>\n      <h3 class="card-title">${e.title}</h3>\n      <p class="card-desc">${e.desc}</p>\n      <div class="card-actions">\n        ${e.actions?.map((e=>`<a class="link" href="${e.url}" target="_blank" rel="noopener"><span class="chip ${e.primary?"primary":""}">${e.label}</span></a>`)).join("")??""}\n        <button class="chip" data-copy="${e.url}">Copiar link</button>\n      </div>\n    `,grid.appendChild(t),t.querySelectorAll(".card-actions a.link").forEach((e=>{e.addEventListener("click",(async()=>{const t=LINKS.find((t=>t.url===e.href||t.actions.some((t=>t.url===e.href))));if(t){const e=doc(db,"scripts",t.id);await updateDoc(e,{views:increment(1)})}}))}))})),grid.querySelectorAll("[data-copy]").forEach((e=>{e.addEventListener("click",(()=>{navigator.clipboard.writeText(e.getAttribute("data-copy")||""),toast("Link copiado!")}))})),addVideoButtons()):grid.innerHTML='<div class="card" style="grid-column: span 12"><div class="card-desc">Nenhum recurso encontrado.</div></div>'}const input=$("#search"),filter=$("#filter");function applyFilter(){const e=(input.value||"").toLowerCase().trim(),t=filter.value;renderCards(LINKS.filter((a=>{const n="all"===t||a.category===t,o=!e||a.title.toLowerCase().includes(e)||a.desc.toLowerCase().includes(e);return n&&o})))}input.addEventListener("input",applyFilter),filter.addEventListener("change",applyFilter),window.addEventListener("keydown",(e=>{"/"===e.key&&document.activeElement!==input&&(e.preventDefault(),input.focus())}));const hamb=$("#hamb"),drawer=$("#drawer");hamb?.addEventListener("click",(()=>drawer.classList.toggle("open")));const donateModal=$("#donateModal"),openDonate=$("#openDonate"),drawerDonate=$("#drawerDonate"),closeDonate=$("#closeDonate");function openDonateModal(){donateModal.classList.add("open"),donateModal.setAttribute("aria-hidden","false")}function closeDonateModal(){donateModal.classList.remove("open"),donateModal.setAttribute("aria-hidden","true")}function renderPeople(e,t,a){const n=document.querySelector(e);if(0===a.length)return;const o=document.createElement("h3");o.className="h2",o.textContent=t,n.parentElement.insertBefore(o,n),n.innerHTML=a.map((e=>`\n        <div class="person">\n          <img alt="${e.name}" class="avatar" src="${e.avatar||avatarFor(e.name)}" />\n          <div>\n            <div class="name">${e.name}</div>\n            <div class="role muted">${t.slice(0,-1)}</div>\n          </div>\n        </div>\n      `)).join("")}openDonate.addEventListener("click",openDonateModal),drawerDonate?.addEventListener("click",(e=>{e.preventDefault(),drawer.classList.remove("open"),openDonateModal()})),closeDonate.addEventListener("click",closeDonateModal),donateModal.addEventListener("click",(e=>{e.target===donateModal&&closeDonateModal()})),$("#copyLink").addEventListener("click",(()=>{navigator.clipboard.writeText(location.href),toast("Link do site copiado!")})),renderCards(LINKS),renderPeople("#owners","Fundadores",OWNERS),renderPeople("#coleaders","Co-Fundadores",COLEADERS),renderPeople("#developers","Desenvolvedores",DEVELOPERS),applyFilter();const topQuery=query(collection(db,"scripts"),orderBy("views","desc"),limit(5));onSnapshot(topQuery,(e=>{renderTopScripts(e.docs.map((e=>e.data())))}))</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Claze Casino — Cassino Online Premium</title>
+<meta name="description" content="Cassino online premium com Aviator, slots e jogos ao vivo. Tema escuro e dourado." />
+<style>
+  :root{
+    --bg-primary: #0a0b0d;
+    --bg-secondary: #141518;
+    --bg-tertiary: #1a1c20;
+    --bg-card: #1f2125;
+    --bg-glass: rgba(255, 212, 122, 0.05);
+    --bg-glass-hover: rgba(255, 212, 122, 0.1);
+    --gold-primary: #ffd47a;
+    --gold-secondary: #f0932b;
+    --gold-dark: #e67e22;
+    --text-primary: #ffffff;
+    --text-secondary: #b8bcc8;
+    --text-muted: #6c7293;
+    --accent-success: #27ae60;
+    --accent-danger: #e74c3c;
+    --accent-warning: #f39c12;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-gold: rgba(255, 212, 122, 0.3);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-gold: 0 4px 20px rgba(255, 212, 122, 0.2);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Layout Principal */
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Header */
+  .header {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: var(--bg-primary);
+    font-size: 18px;
+    box-shadow: var(--shadow-gold);
+    transition: var(--transition);
+  }
+
+  .logo:hover {
+    transform: scale(1.05);
+  }
+
+  .brand-text {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .balance-display {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-md);
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--gold-primary);
+    font-size: 16px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    color: var(--bg-primary);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 212, 122, 0.3);
+  }
+
+  .btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--border-gold);
+  }
+
+  /* Navegação por Abas */
+  .nav-tabs {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 1.5rem;
+  }
+
+  .nav-tabs-content {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 2rem;
+  }
+
+  .nav-tab {
+    padding: 1rem 0;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+
+  .nav-tab:hover {
+    color: var(--gold-primary);
+  }
+
+  .nav-tab.active {
+    color: var(--gold-primary);
+  }
+
+  .nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-primary), var(--gold-secondary));
+    border-radius: 2px;
+  }
+
+  /* Conteúdo Principal */
+  .main-content {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Banner Carousel */
+  .banner-section {
+    margin-bottom: 2rem;
+  }
+
+  .carousel {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 200px;
+    background: var(--bg-card);
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+
+  .banner {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .banner-1 {
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+  }
+
+  .banner-2 {
+    background: linear-gradient(135deg, #00d9ff, #00b894);
+  }
+
+  .banner-3 {
+    background: linear-gradient(135deg, #ff9a9e, #ffc3a0);
+  }
+
+  .carousel-nav {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .carousel-dot.active {
+    background: white;
+    transform: scale(1.2);
+  }
+
+  /* Grid de Jogos */
+  .games-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 13px;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: var(--bg-glass);
+    border-color: var(--border-gold);
+    color: var(--gold-primary);
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .game-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid var(--border-subtle);
+    cursor: pointer;
+  }
+
+  .game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-gold);
+  }
+
+  .game-thumbnail {
+    height: 160px;
+    background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    position: relative;
+  }
+
+  .game-hot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--accent-danger);
+    color: white;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .game-info {
+    padding: 1rem;
+  }
+
+  .game-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+  }
+
+  .game-provider {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .game-multiplier {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-primary);
+    margin-bottom: 12px;
+  }
+
+  .game-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-play {
+    flex: 1;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    color: var(--bg-primary);
+    border: none;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .btn-play:hover {
+    transform: scale(1.02);
+  }
+
+  .btn-favorite {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+  }
+
+  .btn-favorite:hover,
+  .btn-favorite.active {
+    background: var(--bg-glass);
+    border-color: var(--border-gold);
+    color: var(--gold-primary);
+  }
+
+  /* Aviator Game */
+  .aviator-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .aviator-stage {
+    height: 300px;
+    background: linear-gradient(180deg, #0a1a2a, #051015);
+    border-radius: var(--radius-md);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 1.5rem;
+  }
+
+  .multiplier-display {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--gold-primary);
+    backdrop-filter: blur(10px);
+  }
+
+  .plane {
+    width: 60px;
+    height: 30px;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    border-radius: var(--radius-sm);
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: var(--bg-primary);
+    transition: var(--transition);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .aviator-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .bet-section,
+  .stats-section {
+    background: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .input-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 14px;
+    transition: var(--transition);
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: var(--border-gold);
+    box-shadow: 0 0 0 3px rgba(255, 212, 122, 0.1);
+  }
+
+  .bet-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .bet-quick {
+    flex: 1;
+    padding: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 12px;
+  }
+
+  .bet-quick:hover {
+    border-color: var(--border-gold);
+    color: var(--gold-primary);
+  }
+
+  /* Perfil */
+  .profile-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+  }
+
+  .profile-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    height: fit-content;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--bg-primary);
+    margin: 0 auto 1rem;
+  }
+
+  .profile-name {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-level {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+  }
+
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-primary);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-lg);
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  @keyframes modalSlideIn {
+    from { opacity: 0; transform: scale(0.9) translateY(-20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+  }
+
+  .modal-close:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+  }
+
+  /* Mines Game */
+  .mines-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .mines-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .mines-settings {
+    background: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .mines-stats {
+    background: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .mines-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    padding: 1.5rem;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .mine-cell {
+    width: 60px;
+    height: 60px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    transition: var(--transition);
+    position: relative;
+  }
+
+  .mine-cell:hover {
+    border-color: var(--border-gold);
+    transform: scale(1.05);
+  }
+
+  .mine-cell.revealed {
+    cursor: not-allowed;
+  }
+
+  .mine-cell.gem {
+    background: linear-gradient(135deg, var(--accent-success), #27ae60);
+    border-color: var(--accent-success);
+    color: white;
+  }
+
+  .mine-cell.mine {
+    background: linear-gradient(135deg, var(--accent-danger), #c0392b);
+    border-color: var(--accent-danger);
+    color: white;
+  }
+
+  .mine-cell.unrevealed {
+    background: var(--bg-secondary);
+    border-color: var(--border-subtle);
+  }
+
+  .mines-multiplier {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .current-multiplier {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .multiplier-label {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .mines-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .mines-bet-btn {
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 16px;
+  }
+
+  .mines-bet-btn.primary {
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-secondary));
+    color: var(--bg-primary);
+  }
+
+  .mines-bet-btn.secondary {
+    background: var(--accent-success);
+    color: white;
+  }
+
+  .mines-bet-btn.danger {
+    background: var(--accent-danger);
+    color: white;
+  }
+
+  .mines-bet-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .mines-bet-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .mines-history {
+    margin-top: 1rem;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .mines-history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+
+  .mines-history-item.win {
+    border-left: 3px solid var(--accent-success);
+  }
+
+  .mines-history-item.loss {
+    border-left: 3px solid var(--accent-danger);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    animation: toastSlideIn 0.3s ease-out;
+  }
+
+  @keyframes toastSlideIn {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .header-content {
+      padding: 0;
+    }
+
+    .brand-text {
+      font-size: 20px;
+    }
+
+    .nav-tabs-content {
+      gap: 1rem;
+      padding: 0;
+    }
+
+    .main-content {
+      padding: 1rem;
+    }
+
+    .games-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .aviator-controls {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .profile-section {
+      grid-template-columns: 1fr;
+    }
+
+    .filters {
+      gap: 8px;
+    }
+
+    .filter-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .carousel {
+      height: 150px;
+    }
+
+    .banner {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header {
+      padding: 0.75rem 1rem;
+    }
+
+    .main-content {
+      padding: 0.75rem;
+    }
+
+    .games-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .modal {
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+  }
+
+  /* Animações adicionais */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Estados de loading */
+  .loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-subtle);
+    border-top: 2px solid var(--gold-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="brand">
+        <div class="logo">CL</div>
+        <div class="brand-text">CLAZE</div>
+      </div>
+      
+      <div class="header-actions">
+        <div class="balance-display" id="balanceDisplay">R$ 1.000,00</div>
+        <button class="btn btn-secondary" id="loginBtn">Entrar</button>
+        <button class="btn btn-primary" id="registerBtn">Cadastrar</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegação por Abas -->
+  <nav class="nav-tabs">
+    <div class="nav-tabs-content">
+      <a href="#" class="nav-tab active" data-tab="inicio">🏠 Início</a>
+      <a href="#" class="nav-tab" data-tab="jogos">🎮 Jogos</a>
+      <a href="#" class="nav-tab" data-tab="perfil">👤 Perfil</a>
+      <a href="#" class="nav-tab" data-tab="saldo">💰 Saldo</a>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <main class="main-content">
+    <!-- Aba Início -->
+    <div class="tab-content active" id="tab-inicio">
+      <!-- Banner Carousel -->
+      <section class="banner-section">
+        <div class="carousel">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="banner banner-1">
+              <div>🎁 BÔNUS DE 100% NO PRIMEIRO DEPÓSITO</div>
+            </div>
+            <div class="banner banner-2">
+              <div>🏆 TORNEIO R$ 50.000 - PARTICIPE AGORA</div>
+            </div>
+            <div class="banner banner-3">
+              <div>💎 JACKPOTS PROGRESSIVOS DISPONÍVEIS</div>
+            </div>
+          </div>
+          <div class="carousel-nav">
+            <div class="carousel-dot active" data-slide="0"></div>
+            <div class="carousel-dot" data-slide="1"></div>
+            <div class="carousel-dot" data-slide="2"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Jogos Populares -->
+      <section class="games-section">
+        <div class="section-header">
+          <h2 class="section-title">🔥 Jogos Populares</h2>
+          <div class="filters">
+            <button class="filter-btn active" data-filter="todos">Todos</button>
+            <button class="filter-btn" data-filter="slots">Slots</button>
+            <button class="filter-btn" data-filter="live">Ao Vivo</button>
+            <button class="filter-btn" data-filter="crash">Crash</button>
+          </div>
+        </div>
+        
+        <div class="games-grid" id="gamesGrid">
+          <!-- Jogos serão inseridos aqui via JavaScript -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Aba Jogos -->
+    <div class="tab-content" id="tab-jogos">
+      <section class="games-section">
+        <div class="section-header">
+          <h2 class="section-title">🎮 Todos os Jogos</h2>
+          <div class="filters">
+            <button class="filter-btn active" data-filter="todos">Todos</button>
+            <button class="filter-btn" data-filter="aviator">Aviator</button>
+            <button class="filter-btn" data-filter="slots">Slots</button>
+            <button class="filter-btn" data-filter="mines">Mines</button>
+            <button class="filter-btn" data-filter="live">Ao Vivo</button>
+          </div>
+        </div>
+        
+        <div class="games-grid" id="allGamesGrid">
+          <!-- Todos os jogos serão inseridos aqui -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Aba Perfil -->
+    <div class="tab-content" id="tab-perfil">
+      <section class="profile-section">
+        <div class="profile-card">
+          <div class="profile-avatar">U</div>
+          <div class="profile-name">Usuário Demo</div>
+          <div class="profile-level">Nível Iniciante</div>
+          
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value">R$ 1.000</div>
+              <div class="stat-label">Saldo Atual</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">0</div>
+              <div class="stat-label">Jogos Jogados</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">R$ 0</div>
+              <div class="stat-label">Total Ganho</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">0%</div>
+              <div class="stat-label">Taxa de Vitória</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-card">
+          <h3 style="margin-bottom: 1rem;">⚙️ Configurações</h3>
+          <div class="input-group">
+            <label class="input-label">Nome de Usuário</label>
+            <input type="text" class="input-field" value="Usuário Demo" readonly>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Email</label>
+            <input type="email" class="input-field" value="demo@claze.com" readonly>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Data de Cadastro</label>
+            <input type="text" class="input-field" value="Hoje" readonly>
+          </div>
+          <button class="btn btn-primary" style="width: 100%;">Editar Perfil</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Aba Saldo -->
+    <div class="tab-content" id="tab-saldo">
+      <section class="profile-section">
+        <div class="profile-card">
+          <h3 style="margin-bottom: 1rem;">💰 Seu Saldo</h3>
+          <div class="stat-item" style="margin-bottom: 2rem;">
+            <div class="stat-value" style="font-size: 32px;" id="mainBalance">R$ 1.000,00</div>
+            <div class="stat-label">Saldo Disponível</div>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">Valor do Depósito</label>
+            <input type="number" class="input-field" placeholder="Digite o valor" id="depositAmount">
+          </div>
+          <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" id="depositBtn">Depositar</button>
+          
+          <div class="input-group">
+            <label class="input-label">Valor do Saque</label>
+            <input type="number" class="input-field" placeholder="Digite o valor" id="withdrawAmount">
+          </div>
+          <button class="btn btn-secondary" style="width: 100%;" id="withdrawBtn">Sacar</button>
+        </div>
+        
+        <div class="profile-card">
+          <h3 style="margin-bottom: 1rem;">📊 Histórico de Transações</h3>
+          <div id="transactionHistory">
+            <div style="text-align: center; color: var(--text-muted); padding: 2rem;">
+              Nenhuma transação encontrada
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- Modal para Jogos -->
+<div class="modal-backdrop" id="gameModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="gameModalTitle">Jogo</h3>
+      <button class="modal-close" id="closeGameModal">×</button>
+    </div>
+    <div id="gameModalContent">
+      <!-- Conteúdo do jogo será inserido aqui -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Login/Cadastro -->
+<div class="modal-backdrop" id="authModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="authModalTitle">Entrar</h3>
+      <button class="modal-close" id="closeAuthModal">×</button>
+    </div>
+    <div id="authModalContent">
+      <form id="authForm">
+        <div class="input-group">
+          <label class="input-label">Email</label>
+          <input type="email" class="input-field" required id="authEmail">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Senha</label>
+          <input type="password" class="input-field" required id="authPassword">
+        </div>
+        <div class="input-group" id="nameGroup" style="display: none;">
+          <label class="input-label">Nome</label>
+          <input type="text" class="input-field" id="authName">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" id="authSubmit">Entrar</button>
+        <button type="button" class="btn btn-secondary" style="width: 100%;" id="authSwitch">Não tem conta? Cadastre-se</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Dados dos jogos
+const gamesData = [
+  {
+    id: 'aviator',
+    name: 'Aviator',
+    provider: 'CLAZE',
+    category: 'crash',
+    multiplier: '∞x',
+    hot: true,
+    color: '#e74c3c'
+  },
+  {
+    id: 'mines',
+    name: 'Mines',
+    provider: 'CLAZE',
+    category: 'mines',
+    multiplier: '24x',
+    hot: true,
+    color: '#f39c12'
+  },
+  {
+    id: 'fortune-tiger',
+    name: 'Fortune Tiger',
+    provider: 'PG Soft',
+    category: 'slots',
+    multiplier: '2500x',
+    hot: true,
+    color: '#e67e22'
+  },
+  {
+    id: 'fortune-rabbit',
+    name: 'Fortune Rabbit',
+    provider: 'PG Soft',
+    category: 'slots',
+    multiplier: '5000x',
+    hot: false,
+    color: '#9b59b6'
+  },
+  {
+    id: 'blackjack',
+    name: 'Blackjack Live',
+    provider: 'Evolution',
+    category: 'live',
+    multiplier: '21x',
+    hot: false,
+    color: '#2c3e50'
+  },
+  {
+    id: 'roulette',
+    name: 'Roleta Brasileira',
+    provider: 'Evolution',
+    category: 'live',
+    multiplier: '36x',
+    hot: false,
+    color: '#c0392b'
+  }
+];
+
+// Estado da aplicação
+let appState = {
+  currentTab: 'inicio',
+  balance: 1000.00,
+  user: null,
+  favorites: [],
+  transactions: []
+};
+
+// Utilitários
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+
+// Função para mostrar toast
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+// Função para formatar moeda
+function formatCurrency(value) {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(value);
+}
+
+// Função para atualizar saldo
+function updateBalance(newBalance) {
+  appState.balance = newBalance;
+  $('#balanceDisplay').textContent = formatCurrency(newBalance);
+  $('#mainBalance').textContent = formatCurrency(newBalance);
+  
+  // Salvar no localStorage
+  localStorage.setItem('claze_balance', newBalance.toString());
+}
+
+// Função para carregar saldo do localStorage
+function loadBalance() {
+  const savedBalance = localStorage.getItem('claze_balance');
+  if (savedBalance) {
+    updateBalance(parseFloat(savedBalance));
+  }
+}
+
+// Função para renderizar jogos
+function renderGames(games, containerId) {
+  const container = $(containerId);
+  container.innerHTML = '';
+  
+  games.forEach(game => {
+    const gameCard = document.createElement('div');
+    gameCard.className = 'game-card';
+    gameCard.innerHTML = `
+      <div class="game-thumbnail" style="background: linear-gradient(135deg, ${game.color}, ${game.color}88)">
+        ${game.hot ? '<div class="game-hot">🔥 HOT</div>' : ''}
+        <div style="font-size: 24px;">${game.name.charAt(0)}</div>
+      </div>
+      <div class="game-info">
+        <div class="game-title">${game.name}</div>
+        <div class="game-provider">${game.provider}</div>
+        <div class="game-multiplier">Max: ${game.multiplier}</div>
+        <div class="game-actions">
+          <button class="btn-play" onclick="openGame('${game.id}')">Jogar</button>
+          <button class="btn-favorite ${appState.favorites.includes(game.id) ? 'active' : ''}" onclick="toggleFavorite('${game.id}')">
+            ❤️
+          </button>
+        </div>
+      </div>
+    `;
+    container.appendChild(gameCard);
+  });
+}
+
+// Função para alternar favoritos
+function toggleFavorite(gameId) {
+  const index = appState.favorites.indexOf(gameId);
+  if (index > -1) {
+    appState.favorites.splice(index, 1);
+  } else {
+    appState.favorites.push(gameId);
+  }
+  
+  // Atualizar localStorage
+  localStorage.setItem('claze_favorites', JSON.stringify(appState.favorites));
+  
+  // Re-renderizar jogos
+  renderGames(gamesData, '#gamesGrid');
+  renderGames(gamesData, '#allGamesGrid');
+  
+  showToast(index > -1 ? 'Removido dos favoritos' : 'Adicionado aos favoritos');
+}
+
+// Função para abrir jogo
+function openGame(gameId) {
+  const game = gamesData.find(g => g.id === gameId);
+  if (!game) return;
+  
+  $('#gameModalTitle').textContent = game.name;
+  
+  if (gameId === 'aviator') {
+    $('#gameModalContent').innerHTML = createAviatorGame();
+    $('#gameModal').style.display = 'flex';
+    initAviator();
+  } else if (gameId === 'mines') {
+    $('#gameModalContent').innerHTML = createMinesGame();
+    $('#gameModal').style.display = 'flex';
+    initMines();
+  } else {
+    $('#gameModalContent').innerHTML = `
+      <div style="text-align: center; padding: 2rem;">
+        <div style="font-size: 48px; margin-bottom: 1rem;">${game.name.charAt(0)}</div>
+        <h3>${game.name}</h3>
+        <p style="color: var(--text-muted); margin: 1rem 0;">Jogo em desenvolvimento</p>
+        <p style="color: var(--text-muted);">Em breve você poderá jogar ${game.name} aqui!</p>
+      </div>
+    `;
+    $('#gameModal').style.display = 'flex';
+  }
+}
+
+// Função para criar o jogo Aviator
+function createAviatorGame() {
+  return `
+    <div class="aviator-container">
+      <div class="aviator-stage" id="aviatorStage">
+        <div class="multiplier-display" id="multiplierDisplay">1.00x</div>
+        <div class="plane" id="aviatorPlane">✈️</div>
+      </div>
+      
+      <div class="aviator-controls">
+        <div class="bet-section">
+          <h4 style="margin-bottom: 1rem;">💰 Apostar</h4>
+          
+          <div class="input-group">
+            <label class="input-label">Valor da Aposta</label>
+            <input type="number" class="input-field" id="aviatorBetAmount" placeholder="0.00" min="1" max="${appState.balance}">
+          </div>
+          
+          <div class="bet-buttons">
+            <button class="bet-quick" onclick="setQuickBet(10)">R$ 10</button>
+            <button class="bet-quick" onclick="setQuickBet(50)">R$ 50</button>
+            <button class="bet-quick" onclick="setQuickBet(100)">R$ 100</button>
+            <button class="bet-quick" onclick="setQuickBet(appState.balance)">MAX</button>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">Auto Retirar em</label>
+            <input type="number" class="input-field" id="aviatorAutoCashout" placeholder="2.00" step="0.01" min="1.01">
+          </div>
+          
+          <button class="btn btn-primary" style="width: 100%;" id="aviatorBetBtn">Apostar</button>
+          <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem; display: none;" id="aviatorCashoutBtn">Retirar</button>
+        </div>
+        
+        <div class="stats-section">
+          <h4 style="margin-bottom: 1rem;">📊 Estatísticas</h4>
+          
+          <div class="stat-item" style="margin-bottom: 1rem;">
+            <div class="stat-value" id="aviatorCurrentRound">Aguardando...</div>
+            <div class="stat-label">Status da Rodada</div>
+          </div>
+          
+          <div class="stat-item" style="margin-bottom: 1rem;">
+            <div class="stat-value" id="aviatorLastWin">R$ 0,00</div>
+            <div class="stat-label">Último Ganho</div>
+          </div>
+          
+          <h5 style="margin: 1rem 0 0.5rem 0;">Últimos Resultados:</h5>
+          <div id="aviatorHistory" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <!-- Histórico será inserido aqui -->
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Função para criar o jogo Mines
+function createMinesGame() {
+  return `
+    <div class="mines-container">
+      <div class="mines-controls">
+        <div class="mines-settings">
+          <h4 style="margin-bottom: 1rem;">💰 Configurações</h4>
+          
+          <div class="input-group">
+            <label class="input-label">Valor da Aposta</label>
+            <input type="number" class="input-field" id="minesBetAmount" placeholder="0.00" min="1" max="${appState.balance}">
+          </div>
+          
+          <div class="bet-buttons">
+            <button class="bet-quick" onclick="setMinesQuickBet(10)">R$ 10</button>
+            <button class="bet-quick" onclick="setMinesQuickBet(50)">R$ 50</button>
+            <button class="bet-quick" onclick="setMinesQuickBet(100)">R$ 100</button>
+            <button class="bet-quick" onclick="setMinesQuickBet(appState.balance)">MAX</button>
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">Número de Minas</label>
+            <select class="input-field" id="minesCount">
+              <option value="3">3 Minas</option>
+              <option value="5" selected>5 Minas</option>
+              <option value="7">7 Minas</option>
+              <option value="10">10 Minas</option>
+            </select>
+          </div>
+          
+          <button class="mines-bet-btn primary" style="width: 100%;" id="minesStartBtn">Iniciar Jogo</button>
+        </div>
+        
+        <div class="mines-stats">
+          <h4 style="margin-bottom: 1rem;">📊 Estatísticas</h4>
+          
+          <div class="stat-item" style="margin-bottom: 1rem;">
+            <div class="stat-value" id="minesStatus">Aguardando...</div>
+            <div class="stat-label">Status do Jogo</div>
+          </div>
+          
+          <div class="stat-item" style="margin-bottom: 1rem;">
+            <div class="stat-value" id="minesGemsFound">0</div>
+            <div class="stat-label">Gemas Encontradas</div>
+          </div>
+          
+          <div class="stat-item" style="margin-bottom: 1rem;">
+            <div class="stat-value" id="minesLastWin">R$ 0,00</div>
+            <div class="stat-label">Último Ganho</div>
+          </div>
+          
+          <div class="mines-history" id="minesHistory">
+            <!-- Histórico será inserido aqui -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="mines-multiplier">
+        <div class="current-multiplier" id="minesMultiplier">1.00x</div>
+        <div class="multiplier-label">Multiplicador Atual</div>
+      </div>
+      
+      <div class="mines-grid" id="minesGrid">
+        <!-- Grid será gerado via JavaScript -->
+      </div>
+      
+      <div class="mines-actions">
+        <button class="mines-bet-btn secondary" id="minesCashoutBtn" style="display: none;">Retirar Ganhos</button>
+        <button class="mines-bet-btn danger" id="minesResetBtn" style="display: none;">Novo Jogo</button>
+      </div>
+    </div>
+  `;
+}
+
+// Estado do jogo Mines
+let minesState = {
+  isPlaying: false,
+  betAmount: 0,
+  minesCount: 5,
+  gemsFound: 0,
+  currentMultiplier: 1.00,
+  grid: [],
+  minePositions: [],
+  revealedCells: [],
+  gameEnded: false,
+  history: []
+};
+
+// Função para inicializar Mines
+function initMines() {
+  const startBtn = $('#minesStartBtn');
+  const cashoutBtn = $('#minesCashoutBtn');
+  const resetBtn = $('#minesResetBtn');
+  const betAmountInput = $('#minesBetAmount');
+  const minesCountSelect = $('#minesCount');
+  
+  startBtn.addEventListener('click', startMinesGame);
+  cashoutBtn.addEventListener('click', cashoutMines);
+  resetBtn.addEventListener('click', resetMinesGame);
+  
+  // Carregar histórico do localStorage
+  const savedHistory = localStorage.getItem('mines_history');
+  if (savedHistory) {
+    minesState.history = JSON.parse(savedHistory);
+    updateMinesHistory();
+  }
+  
+  // Gerar grid inicial
+  generateMinesGrid();
+}
+
+// Função para definir aposta rápida no Mines
+function setMinesQuickBet(amount) {
+  $('#minesBetAmount').value = Math.min(amount, appState.balance).toFixed(2);
+}
+
+// Função para gerar o grid do Mines
+function generateMinesGrid() {
+  const grid = $('#minesGrid');
+  grid.innerHTML = '';
+  
+  for (let i = 0; i < 25; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'mine-cell unrevealed';
+    cell.dataset.index = i;
+    cell.addEventListener('click', () => revealCell(i));
+    grid.appendChild(cell);
+  }
+}
+
+// Função para iniciar o jogo Mines
+function startMinesGame() {
+  const betAmount = parseFloat($('#minesBetAmount').value);
+  const minesCount = parseInt($('#minesCount').value);
+  
+  if (!betAmount || betAmount <= 0) {
+    showToast('Digite um valor válido para apostar', 'error');
+    return;
+  }
+  
+  if (betAmount > appState.balance) {
+    showToast('Saldo insuficiente', 'error');
+    return;
+  }
+  
+  // Configurar estado do jogo
+  minesState.isPlaying = true;
+  minesState.betAmount = betAmount;
+  minesState.minesCount = minesCount;
+  minesState.gemsFound = 0;
+  minesState.currentMultiplier = 1.00;
+  minesState.revealedCells = [];
+  minesState.gameEnded = false;
+  
+  // Gerar posições das minas aleatoriamente
+  minesState.minePositions = [];
+  while (minesState.minePositions.length < minesCount) {
+    const pos = Math.floor(Math.random() * 25);
+    if (!minesState.minePositions.includes(pos)) {
+      minesState.minePositions.push(pos);
+    }
+  }
+  
+  // Descontar aposta do saldo
+  updateBalance(appState.balance - betAmount);
+  
+  // Atualizar interface
+  $('#minesStartBtn').style.display = 'none';
+  $('#minesCashoutBtn').style.display = 'inline-block';
+  $('#minesResetBtn').style.display = 'inline-block';
+  $('#minesStatus').textContent = 'Jogando...';
+  $('#minesMultiplier').textContent = '1.00x';
+  $('#minesGemsFound').textContent = '0';
+  
+  // Regenerar grid
+  generateMinesGrid();
+  
+  showToast(`Jogo iniciado! ${minesCount} minas no campo.`);
+}
+
+// Função para revelar célula
+function revealCell(index) {
+  if (!minesState.isPlaying || minesState.gameEnded || minesState.revealedCells.includes(index)) {
+    return;
+  }
+  
+  const cell = $(`.mine-cell[data-index="${index}"]`);
+  minesState.revealedCells.push(index);
+  cell.classList.add('revealed');
+  
+  // Verificar se é mina
+  if (minesState.minePositions.includes(index)) {
+    // Explodiu!
+    cell.classList.add('mine');
+    cell.textContent = '💣';
+    
+    // Revelar todas as minas
+    minesState.minePositions.forEach(pos => {
+      const mineCell = $(`.mine-cell[data-index="${pos}"]`);
+      mineCell.classList.add('mine', 'revealed');
+      mineCell.textContent = '💣';
+    });
+    
+    // Fim de jogo - perdeu
+    endMinesGame(false);
+    
+  } else {
+    // É uma gema!
+    cell.classList.add('gem');
+    cell.textContent = '💎';
+    minesState.gemsFound++;
+    
+    // Calcular multiplicador
+    const totalCells = 25;
+    const safeCells = totalCells - minesState.minesCount;
+    const baseMultiplier = 1 + (minesState.gemsFound / safeCells) * (minesState.minesCount * 0.5);
+    minesState.currentMultiplier = Math.max(1.01, baseMultiplier);
+    
+    // Atualizar interface
+    $('#minesGemsFound').textContent = minesState.gemsFound;
+    $('#minesMultiplier').textContent = minesState.currentMultiplier.toFixed(2) + 'x';
+    
+    showToast(`Gema encontrada! Multiplicador: ${minesState.currentMultiplier.toFixed(2)}x`);
+    
+    // Verificar se encontrou todas as gemas possíveis
+    if (minesState.gemsFound >= (totalCells - minesState.minesCount)) {
+      endMinesGame(true);
+    }
+  }
+}
+
+// Função para retirar ganhos
+function cashoutMines() {
+  if (!minesState.isPlaying || minesState.gameEnded) return;
+  
+  const winAmount = minesState.betAmount * minesState.currentMultiplier;
+  updateBalance(appState.balance + winAmount);
+  
+  $('#minesLastWin').textContent = formatCurrency(winAmount);
+  
+  // Adicionar ao histórico
+  addMinesHistory('win', winAmount, minesState.gemsFound, minesState.minesCount);
+  
+  showToast(`Ganhos retirados! ${formatCurrency(winAmount)}`);
+  
+  endMinesGame(true);
+}
+
+// Função para finalizar o jogo
+function endMinesGame(won) {
+  minesState.isPlaying = false;
+  minesState.gameEnded = true;
+  
+  if (!won) {
+    $('#minesStatus').textContent = 'Perdeu!';
+    addMinesHistory('loss', minesState.betAmount, minesState.gemsFound, minesState.minesCount);
+    showToast(`Explodiu! Perdeu ${formatCurrency(minesState.betAmount)}`);
+  } else {
+    $('#minesStatus').textContent = 'Ganhou!';
+  }
+  
+  $('#minesCashoutBtn').style.display = 'none';
+}
+
+// Função para resetar o jogo
+function resetMinesGame() {
+  minesState.isPlaying = false;
+  minesState.gameEnded = false;
+  minesState.gemsFound = 0;
+  minesState.currentMultiplier = 1.00;
+  minesState.revealedCells = [];
+  minesState.minePositions = [];
+  
+  $('#minesStartBtn').style.display = 'inline-block';
+  $('#minesCashoutBtn').style.display = 'none';
+  $('#minesResetBtn').style.display = 'none';
+  $('#minesStatus').textContent = 'Aguardando...';
+  $('#minesMultiplier').textContent = '1.00x';
+  $('#minesGemsFound').textContent = '0';
+  $('#minesBetAmount').value = '';
+  
+  generateMinesGrid();
+  
+  showToast('Novo jogo iniciado!');
+}
+
+// Função para adicionar ao histórico do Mines
+function addMinesHistory(type, amount, gems, mines) {
+  const historyItem = {
+    type,
+    amount,
+    gems,
+    mines,
+    date: new Date().toLocaleString('pt-BR')
+  };
+  
+  minesState.history.unshift(historyItem);
+  if (minesState.history.length > 10) {
+    minesState.history.pop();
+  }
+  
+  localStorage.setItem('mines_history', JSON.stringify(minesState.history));
+  updateMinesHistory();
+}
+
+// Função para atualizar histórico do Mines
+function updateMinesHistory() {
+  const historyContainer = $('#minesHistory');
+  historyContainer.innerHTML = '';
+  
+  if (minesState.history.length === 0) {
+    historyContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 1rem;">Nenhum jogo ainda</div>';
+    return;
+  }
+  
+  minesState.history.forEach(item => {
+    const historyElement = document.createElement('div');
+    historyElement.className = `mines-history-item ${item.type}`;
+    
+    const resultText = item.type === 'win' ? 'Ganhou' : 'Perdeu';
+    const amountText = formatCurrency(item.amount);
+    
+    historyElement.innerHTML = `
+      <div>
+        <div style="font-weight: 600;">${resultText}</div>
+        <div style="font-size: 11px; color: var(--text-muted);">${item.gems} gemas, ${item.mines} minas</div>
+      </div>
+      <div style="font-weight: 600; color: ${item.type === 'win' ? 'var(--accent-success)' : 'var(--accent-danger)'};">
+        ${item.type === 'win' ? '+' : '-'}${amountText}
+      </div>
+    `;
+    
+    historyContainer.appendChild(historyElement);
+  });
+}
+
+// Estado do Aviator
+let aviatorState = {
+  isPlaying: false,
+  currentMultiplier: 1.00,
+  crashPoint: 1.00,
+  betAmount: 0,
+  autoCashout: null,
+  hasActiveBet: false,
+  gameInterval: null,
+  history: []
+};
+
+// Função para definir aposta rápida
+function setQuickBet(amount) {
+  $('#aviatorBetAmount').value = Math.min(amount, appState.balance).toFixed(2);
+}
+
+// Função para inicializar o Aviator
+function initAviator() {
+  const betBtn = $('#aviatorBetBtn');
+  const cashoutBtn = $('#aviatorCashoutBtn');
+  const betAmountInput = $('#aviatorBetAmount');
+  const autoCashoutInput = $('#aviatorAutoCashout');
+  
+  betBtn.addEventListener('click', placeBet);
+  cashoutBtn.addEventListener('click', cashOut);
+  
+  // Carregar histórico do localStorage
+  const savedHistory = localStorage.getItem('aviator_history');
+  if (savedHistory) {
+    aviatorState.history = JSON.parse(savedHistory);
+    updateAviatorHistory();
+  }
+  
+  // Iniciar primeira rodada
+  setTimeout(startNewRound, 2000);
+}
+
+// Função para fazer aposta no Aviator
+function placeBet() {
+  const betAmount = parseFloat($('#aviatorBetAmount').value);
+  const autoCashout = parseFloat($('#aviatorAutoCashout').value) || null;
+  
+  if (!betAmount || betAmount <= 0) {
+    showToast('Digite um valor válido para apostar', 'error');
+    return;
+  }
+  
+  if (betAmount > appState.balance) {
+    showToast('Saldo insuficiente', 'error');
+    return;
+  }
+  
+  if (aviatorState.isPlaying) {
+    showToast('Aguarde a próxima rodada', 'error');
+    return;
+  }
+  
+  // Fazer aposta
+  aviatorState.betAmount = betAmount;
+  aviatorState.autoCashout = autoCashout;
+  aviatorState.hasActiveBet = true;
+  
+  updateBalance(appState.balance - betAmount);
+  
+  $('#aviatorBetBtn').style.display = 'none';
+  $('#aviatorCashoutBtn').style.display = 'block';
+  
+  showToast(`Aposta de ${formatCurrency(betAmount)} realizada!`);
+}
+
+// Função para retirar no Aviator
+function cashOut() {
+  if (!aviatorState.hasActiveBet || !aviatorState.isPlaying) return;
+  
+  const winAmount = aviatorState.betAmount * aviatorState.currentMultiplier;
+  updateBalance(appState.balance + winAmount);
+  
+  $('#aviatorLastWin').textContent = formatCurrency(winAmount);
+  $('#aviatorCashoutBtn').style.display = 'none';
+  
+  aviatorState.hasActiveBet = false;
+  
+  showToast(`Retirada realizada! Ganhou ${formatCurrency(winAmount)}`);
+}
+
+// Função para iniciar nova rodada do Aviator
+function startNewRound() {
+  if (aviatorState.gameInterval) {
+    clearInterval(aviatorState.gameInterval);
+  }
+  
+  // Gerar ponto de crash aleatório (1.01x a 50x)
+  aviatorState.crashPoint = Math.random() < 0.5 ? 
+    1.01 + Math.random() * 2 : // 50% chance de 1.01x a 3.01x
+    1.01 + Math.random() * 49; // 50% chance de 1.01x a 50x
+  
+  aviatorState.currentMultiplier = 1.00;
+  aviatorState.isPlaying = true;
+  
+  $('#aviatorCurrentRound').textContent = 'Voando...';
+  $('#multiplierDisplay').textContent = '1.00x';
+  
+  // Resetar posição do avião
+  const plane = $('#aviatorPlane');
+  plane.style.bottom = '20px';
+  plane.style.left = '20px';
+  plane.style.transform = 'scale(1)';
+  
+  // Iniciar animação
+  aviatorState.gameInterval = setInterval(() => {
+    aviatorState.currentMultiplier += 0.01;
+    
+    // Atualizar display
+    $('#multiplierDisplay').textContent = aviatorState.currentMultiplier.toFixed(2) + 'x';
+    
+    // Mover avião
+    const progress = Math.min(aviatorState.currentMultiplier / 10, 1);
+    plane.style.bottom = (20 + progress * 200) + 'px';
+    plane.style.left = (20 + progress * 200) + 'px';
+    plane.style.transform = `scale(${1 + progress * 0.5})`;
+    
+    // Auto cashout
+    if (aviatorState.autoCashout && aviatorState.hasActiveBet && 
+        aviatorState.currentMultiplier >= aviatorState.autoCashout) {
+      cashOut();
+    }
+    
+    // Verificar crash
+    if (aviatorState.currentMultiplier >= aviatorState.crashPoint) {
+      crashPlane();
+    }
+  }, 100);
+}
+
+// Função para crash do avião
+function crashPlane() {
+  clearInterval(aviatorState.gameInterval);
+  aviatorState.isPlaying = false;
+  
+  $('#aviatorCurrentRound').textContent = `Crashed at ${aviatorState.crashPoint.toFixed(2)}x`;
+  
+  // Se ainda tinha aposta ativa, perdeu
+  if (aviatorState.hasActiveBet) {
+    showToast(`Perdeu ${formatCurrency(aviatorState.betAmount)}! Crashed at ${aviatorState.crashPoint.toFixed(2)}x`);
+    aviatorState.hasActiveBet = false;
+  }
+  
+  // Adicionar ao histórico
+  aviatorState.history.unshift(aviatorState.crashPoint.toFixed(2) + 'x');
+  if (aviatorState.history.length > 10) {
+    aviatorState.history.pop();
+  }
+  
+  // Salvar histórico
+  localStorage.setItem('aviator_history', JSON.stringify(aviatorState.history));
+  updateAviatorHistory();
+  
+  // Resetar botões
+  $('#aviatorBetBtn').style.display = 'block';
+  $('#aviatorCashoutBtn').style.display = 'none';
+  $('#aviatorBetAmount').value = '';
+  $('#aviatorAutoCashout').value = '';
+  
+  // Próxima rodada
+  setTimeout(startNewRound, 3000);
+}
+
+// Função para atualizar histórico do Aviator
+function updateAviatorHistory() {
+  const historyContainer = $('#aviatorHistory');
+  historyContainer.innerHTML = '';
+  
+  aviatorState.history.forEach(result => {
+    const resultElement = document.createElement('div');
+    resultElement.style.cssText = `
+      background: var(--bg-tertiary);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: ${parseFloat(result) >= 2 ? 'var(--accent-success)' : 'var(--text-muted)'};
+    `;
+    resultElement.textContent = result;
+    historyContainer.appendChild(resultElement);
+  });
+}
+
+// Navegação por abas
+function initTabs() {
+  const tabButtons = $$('.nav-tab');
+  const tabContents = $$('.tab-content');
+  
+  tabButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetTab = button.dataset.tab;
+      
+      // Remover classe active de todas as abas
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabContents.forEach(content => content.classList.remove('active'));
+      
+      // Ativar aba clicada
+      button.classList.add('active');
+      $(`#tab-${targetTab}`).classList.add('active');
+      
+      appState.currentTab = targetTab;
+    });
+  });
+}
+
+// Carousel de banners
+function initCarousel() {
+  const track = $('#carouselTrack');
+  const dots = $$('.carousel-dot');
+  let currentSlide = 0;
+  
+  function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlide);
+    });
+  }
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goToSlide(index));
+  });
+  
+  // Auto-play
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % dots.length;
+    goToSlide(currentSlide);
+  }, 5000);
+}
+
+// Filtros de jogos
+function initFilters() {
+  const filterButtons = $$('.filter-btn');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      
+      // Atualizar botões ativos
+      button.parentElement.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      button.classList.add('active');
+      
+      // Filtrar jogos
+      let filteredGames = gamesData;
+      if (filter !== 'todos') {
+        filteredGames = gamesData.filter(game => game.category === filter);
+      }
+      
+      // Re-renderizar
+      const containerId = button.closest('#tab-inicio') ? '#gamesGrid' : '#allGamesGrid';
+      renderGames(filteredGames, containerId);
+    });
+  });
+}
+
+// Modais
+function initModals() {
+  // Modal de jogos
+  $('#closeGameModal').addEventListener('click', () => {
+    $('#gameModal').style.display = 'none';
+    
+    // Limpar intervalos do Aviator se estiver ativo
+    if (aviatorState.gameInterval) {
+      clearInterval(aviatorState.gameInterval);
+    }
+  });
+  
+  // Modal de autenticação
+  $('#loginBtn').addEventListener('click', () => {
+    $('#authModalTitle').textContent = 'Entrar';
+    $('#authSubmit').textContent = 'Entrar';
+    $('#authSwitch').textContent = 'Não tem conta? Cadastre-se';
+    $('#nameGroup').style.display = 'none';
+    $('#authModal').style.display = 'flex';
+  });
+  
+  $('#registerBtn').addEventListener('click', () => {
+    $('#authModalTitle').textContent = 'Cadastrar';
+    $('#authSubmit').textContent = 'Cadastrar';
+    $('#authSwitch').textContent = 'Já tem conta? Entre';
+    $('#nameGroup').style.display = 'block';
+    $('#authModal').style.display = 'flex';
+  });
+  
+  $('#closeAuthModal').addEventListener('click', () => {
+    $('#authModal').style.display = 'none';
+  });
+  
+  $('#authSwitch').addEventListener('click', () => {
+    const isLogin = $('#authModalTitle').textContent === 'Entrar';
+    
+    if (isLogin) {
+      $('#authModalTitle').textContent = 'Cadastrar';
+      $('#authSubmit').textContent = 'Cadastrar';
+      $('#authSwitch').textContent = 'Já tem conta? Entre';
+      $('#nameGroup').style.display = 'block';
+    } else {
+      $('#authModalTitle').textContent = 'Entrar';
+      $('#authSubmit').textContent = 'Entrar';
+      $('#authSwitch').textContent = 'Não tem conta? Cadastre-se';
+      $('#nameGroup').style.display = 'none';
+    }
+  });
+  
+  // Fechar modais clicando fora
+  window.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-backdrop')) {
+      e.target.style.display = 'none';
+    }
+  });
+}
+
+// Transações
+function initTransactions() {
+  $('#depositBtn').addEventListener('click', () => {
+    const amount = parseFloat($('#depositAmount').value);
+    if (!amount || amount <= 0) {
+      showToast('Digite um valor válido', 'error');
+      return;
+    }
+    
+    updateBalance(appState.balance + amount);
+    addTransaction('deposit', amount);
+    $('#depositAmount').value = '';
+    showToast(`Depósito de ${formatCurrency(amount)} realizado com sucesso!`);
+  });
+  
+  $('#withdrawBtn').addEventListener('click', () => {
+    const amount = parseFloat($('#withdrawAmount').value);
+    if (!amount || amount <= 0) {
+      showToast('Digite um valor válido', 'error');
+      return;
+    }
+    
+    if (amount > appState.balance) {
+      showToast('Saldo insuficiente', 'error');
+      return;
+    }
+    
+    updateBalance(appState.balance - amount);
+    addTransaction('withdraw', amount);
+    $('#withdrawAmount').value = '';
+    showToast(`Saque de ${formatCurrency(amount)} solicitado com sucesso!`);
+  });
+}
+
+// Adicionar transação
+function addTransaction(type, amount) {
+  const transaction = {
+    id: Date.now(),
+    type,
+    amount,
+    date: new Date().toLocaleString('pt-BR'),
+    status: 'completed'
+  };
+  
+  appState.transactions.unshift(transaction);
+  localStorage.setItem('claze_transactions', JSON.stringify(appState.transactions));
+  updateTransactionHistory();
+}
+
+// Atualizar histórico de transações
+function updateTransactionHistory() {
+  const container = $('#transactionHistory');
+  
+  if (appState.transactions.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; color: var(--text-muted); padding: 2rem;">
+        Nenhuma transação encontrada
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  appState.transactions.slice(0, 10).forEach(transaction => {
+    const transactionElement = document.createElement('div');
+    transactionElement.style.cssText = `
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.5rem;
+    `;
+    
+    const typeText = transaction.type === 'deposit' ? 'Depósito' : 'Saque';
+    const typeColor = transaction.type === 'deposit' ? 'var(--accent-success)' : 'var(--accent-warning)';
+    
+    transactionElement.innerHTML = `
+      <div>
+        <div style="font-weight: 600;">${typeText}</div>
+        <div style="font-size: 12px; color: var(--text-muted);">${transaction.date}</div>
+      </div>
+      <div style="color: ${typeColor}; font-weight: 600;">
+        ${transaction.type === 'deposit' ? '+' : '-'}${formatCurrency(transaction.amount)}
+      </div>
+    `;
+    
+    container.appendChild(transactionElement);
+  });
+}
+
+// Carregar dados salvos
+function loadSavedData() {
+  loadBalance();
+  
+  const savedFavorites = localStorage.getItem('claze_favorites');
+  if (savedFavorites) {
+    appState.favorites = JSON.parse(savedFavorites);
+  }
+  
+  const savedTransactions = localStorage.getItem('claze_transactions');
+  if (savedTransactions) {
+    appState.transactions = JSON.parse(savedTransactions);
+    updateTransactionHistory();
+  }
+}
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+  loadSavedData();
+  initTabs();
+  initCarousel();
+  initFilters();
+  initModals();
+  initTransactions();
+  
+  // Renderizar jogos iniciais
+  renderGames(gamesData.slice(0, 4), '#gamesGrid');
+  renderGames(gamesData, '#allGamesGrid');
+  
+  // Mostrar mensagem de boas-vindas
+  setTimeout(() => {
+    showToast('Bem-vindo ao Claze Casino! 🎰');
+  }, 1000);
+});
+</script>
+</body>
 </html>
