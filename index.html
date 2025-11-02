@@ -1,1 +1,1278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloutLab - Revenda de Seguidores de Instagram</title>
+    <!-- Importação do Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <!-- Importação do Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Importação da fonte Inter (Google Fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* -------------------------------------------------- */
+        /* 1. VARIÁVEIS E RESET - TEMA NEUMÓRFICO/SOFT UI */
+        /* -------------------------------------------------- */
+        :root {
+            --primary-color: #8B5CF6; /* Roxo moderno */
+            --secondary-color: #EC4899; /* Rosa/Magenta (acento) */
+            --background-color: #18181B; /* Cinza Escuro Ultra-Dark (ZINC-900) */
+            --card-background: #27272A; /* Cinza Escuro para Cartões (ZINC-800) */
+            --text-color: #FAFAFA; /* Texto Claro (ZINC-50) */
+            --text-light: #A1A1AA; /* Texto Secundário (ZINC-400) */
+            --admin-color: #3B82F6; /* Azul para Admin */
+            --success-color: #10B981; /* Verde para Sucesso */
+            --error-color: #EF4444; /* Vermelho para Erro */
+            --border-color: #3F3F46; /* Borda Cinza Escura (ZINC-600) */
+            
+            /* Cores para Neumorfismo */
+            --neumorphic-light: rgba(63, 63, 70, 0.5); /* Cor mais clara para sombra interna/superior */
+            --neumorphic-dark: rgba(0, 0, 0, 0.8); /* Cor mais escura para sombra interna/inferior */
+            
+            /* Gradiente de Destaque */
+            --highlight-gradient: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px;
+            transition: background-color 0.3s;
+        }
+
+        /* -------------------------------------------------- */
+        /* 2. CONTAINER E ESTRUTURA (Neumorfismo Base) */
+        /* -------------------------------------------------- */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--card-background);
+            border-radius: 20px; /* Mais arredondado */
+            padding: 40px;
+            transition: all 0.3s ease;
+            
+            /* Neumorfismo no Container Principal */
+            box-shadow: 
+                10px 10px 20px var(--neumorphic-dark),
+                -10px -10px 20px var(--neumorphic-light);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 3.5em; /* Maior */
+            margin-bottom: 5px;
+            font-weight: 900; /* Ultra-Bold */
+            letter-spacing: 2px;
+            
+            /* Gradiente no Título */
+            background: var(--highlight-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.7); /* Brilho intenso */
+        }
+
+        header p {
+            color: var(--text-light);
+            font-size: 1.2em;
+        }
+
+        /* -------------------------------------------------- */
+        /* 3. NAVEGAÇÃO (Sidebar Neumórfica) */
+        /* -------------------------------------------------- */
+        .main-layout {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav {
+            flex-shrink: 0;
+            width: 240px; /* Mais largo */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 20px;
+            border-right: 1px solid var(--border-color);
+        }
+
+        nav button {
+            background: var(--card-background);
+            border: none;
+            color: var(--text-light);
+            font-size: 1.05em;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 15px 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+            text-align: left;
+            
+            /* Neumorfismo no Botão */
+            box-shadow: 
+                5px 5px 10px var(--neumorphic-dark),
+                -5px -5px 10px var(--neumorphic-light);
+        }
+
+        nav button i {
+            font-size: 1.3em;
+        }
+
+        nav button:hover {
+            color: var(--text-color);
+            /* Efeito de "pressionar" */
+            box-shadow: 
+                inset 3px 3px 7px var(--neumorphic-dark),
+                inset -3px -3px 7px var(--neumorphic-light);
+            transform: scale(0.98);
+        }
+
+        nav button.active {
+            background: var(--highlight-gradient);
+            color: var(--background-color);
+            font-weight: 700;
+            /* Efeito de "pressionado" */
+            box-shadow: 
+                inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+                inset -5px -5px 10px rgba(255, 255, 255, 0.1);
+            transform: scale(1);
+        }
+
+        .content-area {
+            flex-grow: 1;
+        }
+
+        /* -------------------------------------------------- */
+        /* 4. FORMULÁRIOS E INPUTS (Neumorfismo) */
+        /* -------------------------------------------------- */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 1em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px; /* Mais padding */
+            border: none; /* Remove a borda padrão */
+            border-radius: 12px;
+            font-size: 1.05em;
+            transition: all 0.3s;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            
+            /* Neumorfismo no Input (Efeito de "buraco") */
+            box-shadow: 
+                inset 5px 5px 10px var(--neumorphic-dark),
+                inset -5px -5px 10px var(--neumorphic-light);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            /* Efeito de foco com brilho */
+            box-shadow: 
+                inset 5px 5px 10px var(--neumorphic-dark),
+                inset -5px -5px 10px var(--neumorphic-light),
+                0 0 10px var(--primary-color);
+        }
+
+        button.btn-primary {
+            background: var(--highlight-gradient);
+            color: var(--background-color);
+            border: none;
+            padding: 16px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 800;
+            width: 100%;
+            transition: all 0.3s ease;
+            
+            /* Sombra de Destaque */
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5);
+        }
+
+        button.btn-primary:hover {
+            opacity: 0.9;
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .message {
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            border: none;
+            animation: fadeIn 0.5s;
+            
+            /* Neumorfismo Suave */
+            box-shadow: 
+                5px 5px 10px var(--neumorphic-dark),
+                -5px -5px 10px var(--neumorphic-light);
+        }
+
+        .message.success {
+            background-color: #065F46;
+            color: var(--success-color);
+        }
+
+        .message.error {
+            background-color: #991B1B;
+            color: var(--error-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* -------------------------------------------------- */
+        /* 5. SEÇÕES E PAINÉIS */
+        /* -------------------------------------------------- */
+        .content-section {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            border-left: 6px solid var(--primary-color);
+            padding-left: 20px;
+            font-weight: 800;
+            text-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
+        }
+
+        h3 {
+            font-size: 1.6em;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        /* Cards (Neumorfismo) */
+        .card {
+            padding: 30px;
+            border-radius: 15px;
+            background: var(--card-background);
+            transition: transform 0.3s, box-shadow 0.3s;
+            
+            /* Neumorfismo */
+            box-shadow: 
+                8px 8px 16px var(--neumorphic-dark),
+                -8px -8px 16px var(--neumorphic-light);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                12px 12px 24px var(--neumorphic-dark),
+                -12px -12px 24px var(--neumorphic-light);
+        }
+
+        /* Painel do Usuário */
+        .user-dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .user-dashboard {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        .user-info p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .user-info strong {
+            color: var(--primary-color);
+            font-weight: 800;
+        }
+
+        /* PIX Info (Destaque) */
+        #pix-info, #deposit-pix-info {
+            margin-top: 30px;
+            padding: 25px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            background-color: #3F3F46;
+            
+            /* Sombra de Destaque */
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+        }
+
+        #pix-info h4, #deposit-pix-info h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            border-bottom: none;
+        }
+
+        /* Histórico de Pedidos e Transações */
+        .order-list, .transaction-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .order-item, .transaction-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .order-item:hover, .transaction-item:hover {
+            background-color: #3F3F46;
+        }
+
+        .order-item:last-child, .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-details, .transaction-details {
+            flex-grow: 1;
+            min-width: 250px;
+        }
+
+        .order-details strong, .transaction-details strong {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        .order-details a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .order-details a:hover {
+            color: var(--primary-color);
+        }
+
+        .order-status, .transaction-status {
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            color: var(--background-color);
+            font-size: 0.95em;
+            margin-top: 5px;
+            
+            /* Neumorfismo Suave */
+            box-shadow: 
+                3px 3px 6px var(--neumorphic-dark),
+                -3px -3px 6px var(--neumorphic-light);
+        }
+
+        .status-pending { background-color: #F59E0B; }
+        .status-processing { background-color: var(--admin-color); }
+        .status-completed { background-color: var(--success-color); }
+        .status-cancelled { background-color: var(--error-color); }
+        .status-deposit { background-color: var(--success-color); }
+        .status-order { background-color: var(--error-color); }
+
+        /* Painel Administrativo */
+        .admin-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .admin-controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-controls select {
+            flex-grow: 1;
+            max-width: 250px;
+        }
+
+        .order-actions button {
+            background: var(--admin-color);
+            color: var(--background-color);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-weight: 600;
+            
+            /* Neumorfismo no Botão de Ação */
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .order-actions button:hover:not(:disabled) {
+            background-color: #2563EB;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .order-actions button:disabled {
+            background-color: #3F3F46;
+            cursor: not-allowed;
+            color: var(--text-light);
+            box-shadow: none;
+        }
+
+        .order-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .main-layout {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 15px;
+                padding-right: 0;
+                justify-content: center;
+            }
+
+            nav button {
+                width: auto;
+                padding: 10px 15px;
+            }
+
+            .admin-controls {
+                flex-direction: column;
+            }
+
+            .admin-controls select {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1><i class="fas fa-rocket"></i> CloutLab</h1>
+        <p>Aumente seu alcance no Instagram com a melhor revenda de seguidores.</p>
+    </header>
+
+    <div class="main-layout">
+        <nav id="main-nav">
+            <button id="nav-home" class="active" onclick="showSection('home')"><i class="fas fa-home"></i> Início</button>
+            <button id="nav-login" onclick="showSection('login')"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <button id="nav-register" onclick="showSection('register')"><i class="fas fa-user-plus"></i> Cadastro</button>
+            <button id="nav-dashboard" style="display:none;" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Painel</button>
+            <button id="nav-transactions" style="display:none;" onclick="showSection('transactions')"><i class="fas fa-exchange-alt"></i> Transações</button>
+            <button id="nav-admin" style="display:none;" onclick="showSection('admin')"><i class="fas fa-user-shield"></i> Admin</button>
+            <button id="nav-logout" style="display:none;" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        </nav>
+
+        <div class="content-area">
+            <!-- Seção de Mensagens -->
+            <div id="global-message" class="message" style="display:none;"></div>
+
+            <!-- 1. Seção Inicial (Home) -->
+            <section id="home" class="content-section active">
+                <h2>Bem-vindo(a) à CloutLab!</h2>
+                <p>Faça login ou cadastre-se para começar a impulsionar seu perfil do Instagram.</p>
+                <div style="margin-top: 40px; text-align: center;">
+                    <i class="fab fa-instagram" style="font-size: 8em; background: var(--highlight-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(236, 72, 153, 0.7);"></i>
+                </div>
+            </section>
+
+            <!-- 2. Seção de Login -->
+            <section id="login" class="content-section">
+                <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+                <form id="login-form" class="card">
+                    <div class="form-group">
+                        <label for="login-email"><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password"><i class="fas fa-lock"></i> Senha</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Entrar</button>
+                </form>
+            </section>
+
+            <!-- 3. Seção de Cadastro -->
+            <section id="register" class="content-section">
+                <h2><i class="fas fa-user-plus"></i> Cadastro</h2>
+                <form id="register-form" class="card">
+                    <div class="form-group">
+                        <label for="register-email"><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password"><i class="fas fa-lock"></i> Senha</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Cadastrar</button>
+                </form>
+            </section>
+
+            <!-- 4. Painel do Usuário (Dashboard) -->
+            <section id="dashboard" class="content-section">
+                <h2><i class="fas fa-tachometer-alt"></i> Painel do Usuário</h2>
+                <div class="user-dashboard">
+                    <div class="user-info card">
+                        <h3><i class="fas fa-user-circle"></i> Minhas Informações</h3>
+                        <p><strong>E-mail:</strong> <span id="user-email"></span></p>
+                        <p><strong>Status:</strong> <span id="user-status"></span></p>
+                        <p><strong>Saldo:</strong> <span id="user-balance">R$ 0,00</span></p>
+                        <button class="btn-primary" onclick="logout()" style="margin-top: 15px; background: var(--error-color); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);">Sair</button>
+                    </div>
+
+                    <div class="order-form card">
+                        <h3><i class="fas fa-shopping-cart"></i> Novo Pedido</h3>
+                        <form id="new-order-form">
+                            <div class="form-group">
+                                <label for="instagram-link"><i class="fab fa-instagram"></i> Link do Perfil do Instagram</label>
+                                <input type="text" id="instagram-link" placeholder="Ex: https://www.instagram.com/seu_perfil" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="service-select"><i class="fas fa-hand-point-right"></i> Selecione o Serviço</label>
+                                <select id="service-select" required>
+                                    <option value="" disabled selected>Escolha um pacote</option>
+                                    <option value="1000_followers">1.000 Seguidores - R$ 19,90</option>
+                                    <option value="5000_followers">5.000 Seguidores - R$ 79,90</option>
+                                    <option value="10000_followers">10.000 Seguidores - R$ 149,90</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payment-method"><i class="fas fa-money-check-alt"></i> Método de Pagamento</label>
+                                <select id="payment-method" required>
+                                    <option value="balance" selected>Saldo (Recomendado)</option>
+                                    <option value="pix">PIX (Chave será exibida após o pedido)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Fazer Pedido</button>
+                        </form>
+                        <div id="pix-info" style="display: none;">
+                            <h4><i class="fas fa-qrcode"></i> Informações de Pagamento PIX</h4>
+                            <p><strong>Valor:</strong> <span id="pix-value"></span></p>
+                            <p><strong>Chave PIX:</strong> <span id="pix-key">A CHAVE PIX SERÁ INSERIDA AQUI DEPOIS</span></p>
+                            <p><strong>Instrução:</strong> Copie a chave acima e pague no seu banco. Seu pedido será processado após a confirmação.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;"><i class="fas fa-history"></i> Histórico de Pedidos</h3>
+                <ul id="order-history" class="order-list card">
+                    <!-- Pedidos do usuário serão listados aqui -->
+                    <li style="text-align: center; color: var(--text-light);">Nenhum pedido encontrado.</li>
+                </ul>
+            </section>
+
+            <!-- 5. Seção de Transações (Nova Funcionalidade) -->
+            <section id="transactions" class="content-section">
+                <h2><i class="fas fa-exchange-alt"></i> Histórico de Transações</h2>
+                <div class="card">
+                    <h3><i class="fas fa-wallet"></i> Adicionar Saldo (PIX)</h3>
+                    <form id="deposit-form">
+                        <div class="form-group">
+                            <label for="deposit-amount"><i class="fas fa-dollar-sign"></i> Valor do Depósito (Mínimo R$ 10,00)</label>
+                            <input type="number" id="deposit-amount" min="10" step="0.01" required>
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fas fa-plus-circle"></i> Gerar PIX para Depósito</button>
+                    </form>
+                    <div id="deposit-pix-info" style="display: none;">
+                        <h4><i class="fas fa-qrcode"></i> Informações de Depósito PIX</h4>
+                        <p><strong>Valor:</strong> <span id="deposit-pix-value"></span></p>
+                        <p><strong>Chave PIX:</strong> <span id="deposit-pix-key">A CHAVE PIX SERÁ INSERIDA AQUI DEPOIS</span></p>
+                        <p><strong>Instrução:</strong> Copie a chave acima e pague no seu banco. Seu saldo será atualizado após a confirmação.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;"><i class="fas fa-list-alt"></i> Minhas Transações</h3>
+                <ul id="transaction-history" class="transaction-list card">
+                    <!-- Transações do usuário serão listadas aqui -->
+                    <li style="text-align: center; color: var(--text-light);">Nenhuma transação encontrada.</li>
+                </ul>
+            </section>
+
+            <!-- 6. Painel Administrativo (Admin) -->
+            <section id="admin" class="content-section">
+                <h2><i class="fas fa-user-shield"></i> Painel Administrativo</h2>
+                <div class="admin-dashboard card">
+                    <p>Gerencie todos os pedidos e transações do sistema.</p>
+
+                    <div class="admin-controls">
+                        <select id="admin-order-filter">
+                            <option value="all">Todos os Pedidos</option>
+                            <option value="pending">Pendentes</option>
+                            <option value="processing">Em Processamento</option>
+                            <option value="completed">Concluídos</option>
+                            <option value="cancelled">Cancelados</option>
+                        </select>
+                        <select id="admin-transaction-filter">
+                            <option value="all">Todas as Transações</option>
+                            <option value="deposit">Depósitos</option>
+                            <option value="order">Pedidos (Saques)</option>
+                        </select>
+                        <button class="btn-primary" onclick="loadAdminOrders()">Aplicar Filtros</button>
+                    </div>
+
+                    <h3><i class="fas fa-list-alt"></i> Pedidos (Filtrados)</h3>
+                    <ul id="admin-order-list" class="order-list">
+                        <!-- Pedidos para o admin gerenciar serão listados aqui -->
+                        <li style="text-align: center; color: var(--text-light);">Nenhum pedido encontrado.</li>
+                    </ul>
+
+                    <h3 style="margin-top: 30px;"><i class="fas fa-exchange-alt"></i> Transações (Filtradas)</h3>
+                    <ul id="admin-transaction-list" class="transaction-list">
+                        <!-- Transações para o admin gerenciar serão listadas aqui -->
+                        <li style="text-align: center; color: var(--text-light);">Nenhuma transação encontrada.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 CloutLab. Todos os direitos reservados.
+    </footer>
+</div>
+
+<script>
+    // -------------------------------------------------------------------
+    // 1. CONFIGURAÇÃO E INICIALIZAÇÃO DO FIREBASE
+    // -------------------------------------------------------------------
+    const firebaseConfig = {
+        apiKey: "AIzaSyCsZpL81mov4ulBCHavObt8Bbnm3yMAOKE",
+        authDomain: "cloutlab-2093b.firebaseapp.com",
+        projectId: "cloutlab-2093b",
+        storageBucket: "cloutlab-2093b.firebasestorage.app",
+        messagingSenderId: "491466928438",
+        appId: "1:491466928438:web:05b11db663b6387fdcc397",
+        measurementId: "G-QVT2F3WQ1M"
+    };
+
+    // Inicializa o Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Configuração do Admin e Chave PIX (Mantenha as chaves de teste)
+    const ADMIN_EMAIL = "mafa2k23@gmail.com";
+    const PIX_KEY = "CHAVE_PIX_DA_EMPRESA_AQUI";
+    const DISCORD_WEBHOOK_URL = "WEBHOOK_DISCORD_AQUI"; // URL do webhook para notificação de pedidos
+
+    // -------------------------------------------------------------------
+    // 2. FUNÇÕES DE NAVEGAÇÃO E UI
+    // -------------------------------------------------------------------
+
+    /**
+     * Exibe uma mensagem global de sucesso ou erro.
+     * @param {string} text - O texto da mensagem.
+     * @param {string} type - O tipo da mensagem ('success' ou 'error').
+     */
+    function showMessage(text, type) {
+        const msgElement = document.getElementById('global-message');
+        msgElement.textContent = text;
+        msgElement.className = `message ${type}`;
+        msgElement.style.display = 'block';
+        setTimeout(() => {
+            msgElement.style.display = 'none';
+        }, 5000);
+    }
+
+    /**
+     * Alterna a seção visível do site.
+     * @param {string} sectionId - O ID da seção a ser exibida.
+     */
+    function showSection(sectionId) {
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+
+        document.querySelectorAll('#main-nav button').forEach(button => {
+            button.classList.remove('active');
+        });
+        const navButton = document.getElementById(`nav-${sectionId}`);
+        if (navButton) {
+            navButton.classList.add('active');
+        }
+    }
+
+    /**
+     * Atualiza a navegação com base no estado de autenticação.
+     * @param {firebase.User} user - O objeto de usuário do Firebase.
+     */
+    function updateNavigation(user) {
+        const loggedIn = !!user;
+        const isAdmin = loggedIn && user.email === ADMIN_EMAIL;
+
+        document.getElementById('nav-login').style.display = loggedIn ? 'none' : 'block';
+        document.getElementById('nav-register').style.display = loggedIn ? 'none' : 'block';
+        document.getElementById('nav-dashboard').style.display = loggedIn ? 'block' : 'none';
+        document.getElementById('nav-transactions').style.display = loggedIn ? 'block' : 'none';
+        document.getElementById('nav-logout').style.display = loggedIn ? 'block' : 'none';
+        document.getElementById('nav-admin').style.display = isAdmin ? 'block' : 'none';
+
+        if (loggedIn) {
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-status').textContent = isAdmin ? 'Administrador' : 'Cliente';
+            if (isAdmin) {
+                showSection('admin');
+                loadAdminOrders();
+            } else {
+                showSection('dashboard');
+                loadUserOrders(user.uid);
+                loadUserBalance(user.uid);
+                loadUserTransactions(user.uid);
+            }
+        } else {
+            showSection('home');
+        }
+    }
+
+    // -------------------------------------------------------------------
+    // 3. FUNÇÕES DE AUTENTICAÇÃO (LOGIN/CADASTRO/LOGOUT)
+    // -------------------------------------------------------------------
+
+    // Listener de estado de autenticação
+    auth.onAuthStateChanged(updateNavigation);
+
+    // Login
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            showMessage('Login realizado com sucesso!', 'success');
+        } catch (error) {
+            showMessage(`Erro no Login: ${error.message}`, 'error');
+        }
+    });
+
+    // Cadastro
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+
+        try {
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            // Cria um documento de usuário no Firestore com saldo inicial
+            await db.collection('users').doc(userCredential.user.uid).set({
+                email: email,
+                balance: 0.00, // Novo campo de saldo
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            showMessage('Cadastro realizado com sucesso! Você está logado.', 'success');
+        } catch (error) {
+            showMessage(`Erro no Cadastro: ${error.message}`, 'error');
+        }
+    });
+
+    // Logout
+    function logout() {
+        auth.signOut().then(() => {
+            showMessage('Você saiu da sua conta.', 'success');
+        }).catch((error) => {
+            showMessage(`Erro ao sair: ${error.message}`, 'error');
+        });
+    }
+
+    // -------------------------------------------------------------------
+    // 4. FUNÇÕES DE SALDO E TRANSAÇÕES (NOVA FUNCIONALIDADE)
+    // -------------------------------------------------------------------
+
+    /**
+     * Carrega e exibe o saldo do usuário.
+     * @param {string} userId - O ID do usuário.
+     */
+    function loadUserBalance(userId) {
+        db.collection('users').doc(userId).onSnapshot(doc => {
+            if (doc.exists) {
+                const balance = doc.data().balance || 0.00;
+                document.getElementById('user-balance').textContent = `R$ ${balance.toFixed(2).replace('.', ',')}`;
+            }
+        }, error => {
+            console.error("Erro ao carregar saldo:", error);
+        });
+    }
+
+    // Depósito (Simulação de geração de PIX)
+    document.getElementById('deposit-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) {
+            showMessage('Você precisa estar logado para fazer um depósito.', 'error');
+            return;
+        }
+
+        const amount = parseFloat(document.getElementById('deposit-amount').value);
+        if (isNaN(amount) || amount < 10) {
+            showMessage('O valor mínimo para depósito é R$ 10,00.', 'error');
+            return;
+        }
+
+        // Simulação de geração de PIX
+        const transactionData = {
+            userId: user.uid,
+            userEmail: user.email,
+            type: 'deposit',
+            amount: amount,
+            status: 'pending', // O depósito real seria 'pending' até a confirmação do PIX
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        try {
+            await db.collection('transactions').add(transactionData);
+
+            // Exibe as informações do PIX para depósito
+            document.getElementById('deposit-pix-value').textContent = `R$ ${amount.toFixed(2).replace('.', ',')}`;
+            document.getElementById('deposit-pix-key').textContent = PIX_KEY;
+            document.getElementById('deposit-pix-info').style.display = 'block';
+
+            showMessage('PIX para depósito gerado com sucesso! Pague para creditar seu saldo.', 'success');
+            document.getElementById('deposit-form').reset();
+            loadUserTransactions(user.uid);
+        } catch (error) {
+            showMessage(`Erro ao gerar PIX para depósito: ${error.message}`, 'error');
+        }
+    });
+
+    /**
+     * Carrega e exibe o histórico de transações do usuário.
+     * @param {string} userId - O ID do usuário.
+     */
+    function loadUserTransactions(userId) {
+        const transactionList = document.getElementById('transaction-history');
+        transactionList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Carregando transações...</li>';
+
+        db.collection('transactions')
+            .where('userId', '==', userId)
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(snapshot => {
+                transactionList.innerHTML = '';
+                if (snapshot.empty) {
+                    transactionList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Nenhuma transação encontrada.</li>';
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    const transaction = doc.data();
+                    const date = transaction.createdAt ? new Date(transaction.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
+                    const statusClass = `status-${transaction.type}`;
+                    const sign = transaction.type === 'deposit' ? '+' : '-';
+                    const description = transaction.type === 'deposit' ? 'Depósito de Saldo' : `Pagamento de Pedido #${transaction.orderId ? transaction.orderId.substring(0, 6) : 'N/A'}`;
+
+                    const li = document.createElement('li');
+                    li.className = 'transaction-item';
+                    li.innerHTML = `
+                        <div class="transaction-details">
+                            <strong>${description}</strong>
+                            <p>ID: ${doc.id.substring(0, 6)} | Data: ${date}</p>
+                        </div>
+                        <span class="transaction-status ${statusClass}">${sign} R$ ${transaction.amount.toFixed(2).replace('.', ',')}</span>
+                    `;
+                    transactionList.appendChild(li);
+                });
+            }, error => {
+                console.error("Erro ao carregar transações do usuário:", error);
+                transactionList.innerHTML = '<li style="text-align: center; color: var(--error-color);">Erro ao carregar transações.</li>';
+            });
+    }
+
+    // -------------------------------------------------------------------
+    // 5. FUNÇÕES DE PEDIDO (USUÁRIO)
+    // -------------------------------------------------------------------
+
+    // Mapeamento de serviços para valores
+    const servicePrices = {
+        "1000_followers": { name: "1.000 Seguidores", price: 19.90 },
+        "5000_followers": { name: "5.000 Seguidores", price: 79.90 },
+        "10000_followers": { name: "10.000 Seguidores", price: 149.90 }
+    };
+
+    document.getElementById('new-order-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) {
+            showMessage('Você precisa estar logado para fazer um pedido.', 'error');
+            return;
+        }
+
+        const instagramLink = document.getElementById('instagram-link').value;
+        const serviceKey = document.getElementById('service-select').value;
+        const paymentMethod = document.getElementById('payment-method').value;
+
+        if (!serviceKey) {
+            showMessage('Por favor, selecione um serviço.', 'error');
+            return;
+        }
+
+        const service = servicePrices[serviceKey];
+        const orderPrice = service.price;
+
+        if (paymentMethod === 'balance') {
+            // Verifica o saldo
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const currentBalance = userDoc.data().balance || 0.00;
+
+            if (currentBalance < orderPrice) {
+                showMessage(`Saldo insuficiente. Seu saldo atual é R$ ${currentBalance.toFixed(2).replace('.', ',')}.`, 'error');
+                return;
+            }
+
+            // 1. Debita o saldo
+            await db.collection('users').doc(user.uid).update({
+                balance: firebase.firestore.FieldValue.increment(-orderPrice)
+            });
+
+            // 2. Cria o pedido com status 'processing'
+            const orderData = {
+                userId: user.uid,
+                userEmail: user.email,
+                instagramLink: instagramLink,
+                serviceName: service.name,
+                servicePrice: orderPrice,
+                paymentMethod: paymentMethod,
+                status: 'processing', // Já está pago, então vai direto para processamento
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            const docRef = await db.collection('orders').add(orderData);
+            const orderId = docRef.id;
+
+            // 3. Registra a transação de débito
+            await db.collection('transactions').add({
+                userId: user.uid,
+                userEmail: user.email,
+                type: 'order',
+                amount: orderPrice,
+                orderId: orderId, // Adiciona o ID do pedido à transação
+                status: 'completed',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            // 4. Envia notificação para o Discord Webhook
+            await sendDiscordNotification(orderId, orderData);
+
+            showMessage('Pedido realizado e pago com saldo com sucesso! Seu pedido está em processamento.', 'success');
+            document.getElementById('pix-info').style.display = 'none';
+            document.getElementById('new-order-form').reset();
+            loadUserOrders(user.uid);
+            loadUserTransactions(user.uid);
+
+        } else if (paymentMethod === 'pix') {
+            // Cria o pedido com status 'pending'
+            const orderData = {
+                userId: user.uid,
+                userEmail: user.email,
+                instagramLink: instagramLink,
+                serviceName: service.name,
+                servicePrice: orderPrice,
+                paymentMethod: paymentMethod,
+                status: 'pending', // Aguardando pagamento PIX
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            const docRef = await db.collection('orders').add(orderData);
+            const orderId = docRef.id;
+
+            // Exibe as informações do PIX
+            document.getElementById('pix-value').textContent = `R$ ${orderPrice.toFixed(2).replace('.', ',')}`;
+            document.getElementById('pix-key').textContent = PIX_KEY;
+            document.getElementById('pix-info').style.display = 'block';
+
+            // Envia notificação para o Discord Webhook
+            await sendDiscordNotification(orderId, orderData);
+
+            showMessage('Pedido realizado com sucesso! Verifique as informações do PIX para pagamento.', 'success');
+            document.getElementById('new-order-form').reset();
+            loadUserOrders(user.uid);
+        }
+    });
+
+    /**
+     * Envia uma notificação de novo pedido para o Discord Webhook.
+     * @param {string} orderId - O ID do pedido.
+     * @param {object} data - Os dados do pedido.
+     */
+    async function sendDiscordNotification(orderId, data) {
+        const payload = {
+            embeds: [{
+                title: `🚨 NOVO PEDIDO RECEBIDO (${data.status.toUpperCase()}) 🚨`,
+                color: data.status === 'processing' ? 3447003 : 15158332, // Azul para processando, Vermelho para pendente
+                fields: [
+                    { name: "ID do Pedido", value: orderId.substring(0, 6), inline: true },
+                    { name: "E-mail do Cliente", value: data.userEmail, inline: true },
+                    { name: "Serviço", value: data.serviceName, inline: false },
+                    { name: "Valor", value: `R$ ${data.servicePrice.toFixed(2).replace('.', ',')}`, inline: true },
+                    { name: "Link do Instagram", value: data.instagramLink, inline: false },
+                    { name: "Método de Pagamento", value: data.paymentMethod.toUpperCase(), inline: true },
+                    { name: "Status Inicial", value: data.status.toUpperCase(), inline: true }
+                ],
+                timestamp: new Date().toISOString(),
+                footer: { text: "CloutLab - Gerenciamento de Pedidos" }
+            }]
+        };
+
+        try {
+            await fetch(DISCORD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (error) {
+            console.error("Erro ao enviar notificação para o Discord:", error);
+        }
+    }
+
+    /**
+     * Carrega e exibe o histórico de pedidos do usuário.
+     * @param {string} userId - O ID do usuário.
+     */
+    function loadUserOrders(userId) {
+        const orderList = document.getElementById('order-history');
+        orderList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Carregando pedidos...</li>';
+
+        db.collection('orders')
+            .where('userId', '==', userId)
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(snapshot => {
+                orderList.innerHTML = '';
+                if (snapshot.empty) {
+                    orderList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Nenhum pedido encontrado.</li>';
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    const order = doc.data();
+                    const date = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
+                    const statusClass = `status-${order.status}`;
+
+                    const li = document.createElement('li');
+                    li.className = 'order-item';
+                    li.innerHTML = `
+                        <div class="order-details">
+                            <strong>Pedido #${doc.id.substring(0, 6)}</strong> - ${order.serviceName}
+                            <p>Link: <a href="${order.instagramLink}" target="_blank">${order.instagramLink}</a></p>
+                            <p>Data: ${date} | Valor: R$ ${order.servicePrice.toFixed(2).replace('.', ',')} | Pagamento: ${order.paymentMethod.toUpperCase()}</p>
+                        </div>
+                        <span class="order-status ${statusClass}">${order.status.toUpperCase()}</span>
+                    `;
+                    orderList.appendChild(li);
+                });
+            }, error => {
+                console.error("Erro ao carregar pedidos do usuário:", error);
+                orderList.innerHTML = '<li style="text-align: center; color: var(--error-color);">Erro ao carregar pedidos.</li>';
+            });
+    }
+
+    // -------------------------------------------------------------------
+    // 6. FUNÇÕES DO PAINEL ADMINISTRATIVO (COM FILTROS)
+    // -------------------------------------------------------------------
+
+    /**
+     * Carrega e exibe todos os pedidos para o administrador, com filtros.
+     */
+    function loadAdminOrders() {
+        const orderList = document.getElementById('admin-order-list');
+        const orderFilter = document.getElementById('admin-order-filter').value;
+        const transactionFilter = document.getElementById('admin-transaction-filter').value;
+
+        orderList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Carregando pedidos...</li>';
+
+        let orderQuery = db.collection('orders').orderBy('createdAt', 'desc');
+        if (orderFilter !== 'all') {
+            orderQuery = orderQuery.where('status', '==', orderFilter);
+        }
+
+        orderQuery.onSnapshot(snapshot => {
+            orderList.innerHTML = '';
+            if (snapshot.empty) {
+                orderList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Nenhum pedido encontrado.</li>';
+                return;
+            }
+
+            snapshot.forEach(doc => {
+                const order = doc.data();
+                const date = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
+                const statusClass = `status-${order.status}`;
+
+                const li = document.createElement('li');
+                li.className = 'order-item';
+                li.innerHTML = `
+                    <div class="order-details">
+                        <strong>Pedido #${doc.id.substring(0, 6)}</strong> - ${order.serviceName}
+                        <p>Cliente: ${order.userEmail} | Link: <a href="${order.instagramLink}" target="_blank">${order.instagramLink}</a></p>
+                        <p>Data: ${date} | Valor: R$ ${order.servicePrice.toFixed(2).replace('.', ',')} | Pagamento: ${order.paymentMethod.toUpperCase()}</p>
+                    </div>
+                    <div class="order-actions">
+                        <span class="order-status ${statusClass}">${order.status.toUpperCase()}</span>
+                        <button onclick="updateOrderStatus('${doc.id}', 'processing')" ${order.status === 'processing' ? 'disabled' : ''}>Processar</button>
+                        <button onclick="updateOrderStatus('${doc.id}', 'completed')" ${order.status === 'completed' ? 'disabled' : ''}>Concluir</button>
+                        <button onclick="updateOrderStatus('${doc.id}', 'cancelled')" ${order.status === 'cancelled' ? 'disabled' : ''} style="background-color: var(--error-color);">Cancelar</button>
+                    </div>
+                `;
+                orderList.appendChild(li);
+            });
+        }, error => {
+            console.error("Erro ao carregar pedidos do admin:", error);
+            orderList.innerHTML = '<li style="text-align: center; color: var(--error-color);">Erro ao carregar pedidos.</li>';
+        });
+
+        // Carrega Transações do Admin (Nova Funcionalidade)
+        const adminTransactionList = document.getElementById('admin-transaction-list');
+        adminTransactionList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Carregando transações...</li>';
+
+        let transactionQuery = db.collection('transactions').orderBy('createdAt', 'desc');
+        if (transactionFilter !== 'all') {
+            transactionQuery = transactionQuery.where('type', '==', transactionFilter);
+        }
+
+        transactionQuery.onSnapshot(snapshot => {
+            adminTransactionList.innerHTML = '';
+            if (snapshot.empty) {
+                adminTransactionList.innerHTML = '<li style="text-align: center; color: var(--text-light);">Nenhuma transação encontrada.</li>';
+                return;
+            }
+
+            snapshot.forEach(doc => {
+                const transaction = doc.data();
+                const date = transaction.createdAt ? new Date(transaction.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
+                const statusClass = `status-${transaction.type}`;
+                const sign = transaction.type === 'deposit' ? '+' : '-';
+                const description = transaction.type === 'deposit' ? 'Depósito de Saldo' : `Pagamento de Pedido #${transaction.orderId ? transaction.orderId.substring(0, 6) : 'N/A'}`;
+
+                const li = document.createElement('li');
+                li.className = 'transaction-item';
+                li.innerHTML = `
+                    <div class="transaction-details">
+                        <strong>${description}</strong>
+                        <p>ID: ${doc.id.substring(0, 6)} | Cliente: ${transaction.userEmail} | Data: ${date}</p>
+                    </div>
+                    <span class="transaction-status ${statusClass}">${sign} R$ ${transaction.amount.toFixed(2).replace('.', ',')}</span>
+                `;
+                adminTransactionList.appendChild(li);
+            });
+        }, error => {
+            console.error("Erro ao carregar transações do admin:", error);
+            adminTransactionList.innerHTML = '<li style="text-align: center; color: var(--error-color);">Erro ao carregar transações.</li>';
+        });
+    }
+
+    /**
+     * Atualiza o status de um pedido.
+     * @param {string} orderId - O ID do pedido.
+     * @param {string} newStatus - O novo status ('processing', 'completed', 'cancelled').
+     */
+    function updateOrderStatus(orderId, newStatus) {
+        const user = auth.currentUser;
+        if (!user || user.email !== ADMIN_EMAIL) {
+            showMessage('Acesso negado. Apenas administradores podem alterar o status.', 'error');
+            return;
+        }
+
+        db.collection('orders').doc(orderId).update({
+            status: newStatus,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            showMessage(`Status do Pedido #${orderId.substring(0, 6)} atualizado para ${newStatus.toUpperCase()}.`, 'success');
+        }).catch(error => {
+            showMessage(`Erro ao atualizar status: ${error.message}`, 'error');
+        });
+    }
+
+    // -------------------------------------------------------------------
+    // 7. INICIALIZAÇÃO
+    // -------------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+        // Garante que a seção inicial esteja ativa ao carregar
+        showSection('home');
+
+        // Adiciona listeners para os filtros do Admin
+        document.getElementById('admin-order-filter').addEventListener('change', loadAdminOrders);
+        document.getElementById('admin-transaction-filter').addEventListener('change', loadAdminOrders);
+    });
+
+</script>
+
+</body>
+</html>
 
