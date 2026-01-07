@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AD Fitwear — Luxury Fitwear</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -15,6 +15,10 @@
   --text:#111111;
   --muted:#6f6f6f;
   --gold:#c9a45c;
+  --success:#22c55e;
+  --error:#ef4444;
+  --warning:#f59e0b;
+  --info:#3b82f6;
 }
 
 body.dark{
@@ -31,111 +35,330 @@ body{
   background:var(--bg);
   color:var(--text);
   transition:.3s;
+  line-height:1.6;
 }
 a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:Montserrat,sans-serif}
 
 header{
   position:sticky;top:0;z-index:50;
   background:var(--bg);
   border-bottom:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
 }
 .nav{
   max-width:1400px;margin:auto;
   padding:18px 32px;
-  display:flex;justify-content:space-between;align-items:center
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:20px;
 }
 .brand{display:flex;align-items:center;gap:12px}
 .brand img{height:40px}
-.brand span{font-family:'Playfair Display';letter-spacing:3px;color:var(--gold)}
-.nav-links{display:flex;gap:28px;font-size:14px}
+.brand span{font-family:'Playfair Display';letter-spacing:3px;color:var(--gold);font-weight:600}
+.nav-links{display:flex;gap:28px;font-size:14px;flex-wrap:wrap}
+.nav-links a{transition:.3s;cursor:pointer}
 .nav-links a:hover{color:var(--gold)}
-.actions{display:flex;gap:18px;font-size:18px;cursor:pointer}
+.actions{display:flex;gap:18px;font-size:18px;cursor:pointer;align-items:center}
+.actions span{transition:.3s}
+.actions span:hover{color:var(--gold)}
 
 .hero{
   height:90vh;display:grid;place-items:center;text-align:center;
   background:linear-gradient(180deg,var(--bg),var(--card));
+  padding:40px 32px;
 }
-.hero h1{font-family:'Playfair Display';font-size:clamp(44px,6vw,82px)}
+.hero h1{font-family:'Playfair Display';font-size:clamp(44px,6vw,82px);margin-bottom:16px}
 .hero h1 span{color:var(--gold)}
-.hero p{max-width:600px;margin:24px auto;color:var(--muted)}
+.hero p{max-width:600px;margin:24px auto;color:var(--muted);font-size:16px}
 .btn{
   padding:14px 36px;border-radius:40px;
   border:1px solid var(--gold);
   color:var(--gold);letter-spacing:2px;font-size:12px;
-  transition:.3s;background:none
+  transition:.3s;background:none;cursor:pointer;
+  font-weight:600;
 }
 .btn:hover{background:var(--gold);color:#000}
+.btn-primary{background:var(--gold);color:#000;border:none}
+.btn-primary:hover{opacity:.9}
+.btn-secondary{background:var(--card);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--border)}
+.btn-danger{border-color:var(--error);color:var(--error)}
+.btn-danger:hover{background:var(--error);color:#fff}
+.btn-success{border-color:var(--success);color:var(--success)}
+.btn-success:hover{background:var(--success);color:#fff}
+.btn-sm{padding:10px 20px;font-size:11px}
 
 section{padding:100px 32px}
+.section-title{
+  font-family:'Playfair Display';
+  font-size:clamp(32px,4vw,48px);
+  margin-bottom:40px;
+  text-align:center;
+}
+
 .products{
   max-width:1400px;margin:auto;
   display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:40px
+  gap:40px;
 }
 .product{
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;transition:.3s
+  border-radius:14px;overflow:hidden;transition:.3s;
+  cursor:pointer;
 }
-.product:hover{transform:translateY(-6px)}
+.product:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.1)}
 .product img{width:100%;height:360px;object-fit:cover}
 .product-info{padding:22px}
-.price{color:var(--gold);margin:6px 0}
+.product-info h3{margin-bottom:8px;font-size:16px}
+.price{color:var(--gold);margin:6px 0;font-weight:600;font-size:18px}
 .add{
   width:100%;padding:12px;border-radius:30px;
-  border:1px solid var(--gold);background:none;color:var(--gold)
+  border:1px solid var(--gold);background:none;color:var(--gold);
+  font-weight:600;transition:.3s;margin-top:12px;
 }
 .add:hover{background:var(--gold);color:#000}
 
+.search-box{
+  max-width:1400px;margin:0 auto 40px;
+  display:flex;gap:12px;
+}
+.search-box input{
+  flex:1;padding:12px 16px;border-radius:30px;
+  border:1px solid var(--border);background:var(--card);
+  color:var(--text);font-size:14px;
+}
+.search-box button{padding:12px 24px}
+
 .cart-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.5);
-  display:none;z-index:80
+  display:none;z-index:80;animation:fadeIn .3s;
 }
 .cart{
   position:fixed;right:-420px;top:0;width:420px;height:100vh;
   background:var(--bg);border-left:1px solid var(--border);
-  padding:26px;transition:.4s;z-index:90
+  padding:26px;transition:.4s;z-index:90;overflow-y:auto;
+  display:flex;flex-direction:column;
 }
 .cart.active{right:0}
 .cart-overlay.active{display:block}
-.cart h3{font-family:'Playfair Display';margin-bottom:20px}
-.cart-item{display:flex;justify-content:space-between;margin-bottom:14px}
+.cart-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:20px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.cart-header h3{font-family:'Playfair Display';margin:0}
+.close-btn{
+  background:none;border:none;font-size:24px;cursor:pointer;
+  color:var(--text);transition:.3s;
+}
+.close-btn:hover{color:var(--gold)}
+.cart-item{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;padding:12px;
+  background:var(--card);border-radius:8px;
+  border:1px solid var(--border);
+}
+.cart-item-info{flex:1}
+.cart-item-name{font-weight:600;margin-bottom:4px}
+.cart-item-price{color:var(--gold);font-size:14px}
+.cart-item-qty{display:flex;gap:6px;align-items:center;font-size:12px}
+.cart-item-qty button{padding:2px 6px;border:1px solid var(--border);background:var(--bg);border-radius:4px;min-width:28px}
+.cart-item-remove{background:none;border:none;color:var(--error);cursor:pointer;font-size:18px}
+.cart-item-remove:hover{opacity:.7}
+.cart-total{
+  margin-top:auto;padding-top:16px;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;
+  font-weight:600;margin-bottom:16px;
+}
+.cart-actions{display:flex;gap:12px}
+.cart-actions button{flex:1;padding:12px}
 
 .modal{
   position:fixed;inset:0;background:rgba(0,0,0,.6);
-  display:none;place-items:center;z-index:100
+  display:none;place-items:center;z-index:100;animation:fadeIn .3s;
+  padding:20px;
 }
 .modal.active{display:grid}
 .modal-box{
-  background:var(--bg);padding:36px;border-radius:18px;width:360px;
-  border:1px solid var(--border)
+  background:var(--bg);padding:36px;border-radius:18px;width:100%;max-width:420px;
+  border:1px solid var(--border);max-height:90vh;overflow-y:auto;
+  animation:slideUp .3s;
 }
-.modal-box input{
+.modal-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.modal-header h3{margin:0;font-family:'Playfair Display'}
+.modal-header .close-btn{margin:0}
+.modal-box input,.modal-box select,.modal-box textarea{
   width:100%;padding:12px;margin-bottom:12px;
   border-radius:8px;border:1px solid var(--border);
-  background:var(--card);color:var(--text)
+  background:var(--card);color:var(--text);
+  font-family:Montserrat,sans-serif;
 }
+.modal-box textarea{resize:vertical;min-height:80px}
 .modal-box button{
   width:100%;padding:12px;border-radius:30px;
-  border:1px solid var(--gold);background:none;color:var(--gold)
+  border:1px solid var(--gold);background:none;color:var(--gold);
+  font-weight:600;transition:.3s;margin-top:12px;
+}
+.modal-box button:hover{background:var(--gold);color:#000}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;margin-bottom:6px;font-weight:600;font-size:14px}
+.form-group input,.form-group select{width:100%}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row .form-group{margin-bottom:0}
+.auth-toggle{text-align:center;margin-top:16px;font-size:14px;color:var(--muted)}
+.auth-toggle span{color:var(--gold);cursor:pointer;font-weight:600}
+
+.admin-section{
+  display:none;
+  max-width:1400px;
+  margin:auto;
+}
+.admin-section.active{display:block}
+.admin-tabs{
+  display:flex;gap:12px;margin-bottom:32px;border-bottom:1px solid var(--border);
+}
+.admin-tab{
+  padding:12px 20px;border:none;background:none;
+  cursor:pointer;font-weight:600;color:var(--muted);
+  border-bottom:3px solid transparent;transition:.3s;
+}
+.admin-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.admin-tab:hover{color:var(--text)}
+.admin-content{display:none}
+.admin-content.active{display:block}
+
+.orders-table{
+  width:100%;border-collapse:collapse;
+  background:var(--card);border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);
+}
+.orders-table th{
+  background:var(--border);padding:14px;text-align:left;
+  font-weight:600;font-size:13px;text-transform:uppercase;
+}
+.orders-table td{
+  padding:14px;border-top:1px solid var(--border);
+}
+.orders-table tr:hover{background:var(--bg)}
+.status-badge{
+  display:inline-block;padding:6px 12px;border-radius:20px;
+  font-size:12px;font-weight:600;
+}
+.status-preparando{background:var(--warning);color:#000}
+.status-revisando{background:var(--gold);color:#000}
+.status-a-caminho{background:var(--info);color:#fff}
+.status-enviado{background:var(--success);color:#fff}
+.status-entregue{background:var(--success);color:#fff}
+.status-cancelado{background:var(--error);color:#fff}
+
+.pix-display{
+  background:var(--card);border:2px dashed var(--border);
+  border-radius:12px;padding:32px;text-align:center;
+  margin:24px 0;
+}
+.pix-qr{
+  width:200px;height:200px;margin:16px auto;
+  background:#fff;border:2px solid var(--border);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:var(--muted);
+}
+.pix-key{
+  background:var(--bg);padding:16px;border-radius:8px;
+  margin:16px 0;border:1px solid var(--border);
+  word-break:break-all;font-family:monospace;font-size:13px;
+}
+.pix-copy{
+  padding:10px 20px;margin-top:12px;
+  background:var(--gold);color:#000;border:none;
+  border-radius:30px;font-weight:600;
 }
 
-.admin{
+.account-section{
   display:none;
-  max-width:1100px;
-  margin:auto
+  max-width:1400px;
+  margin:auto;
 }
-.admin input{
-  width:100%;
-  padding:10px;
-  margin:6px 0
+.account-section.active{display:block}
+.account-tabs{
+  display:flex;gap:12px;margin-bottom:32px;border-bottom:1px solid var(--border);
+}
+.account-tab{
+  padding:12px 20px;border:none;background:none;
+  cursor:pointer;font-weight:600;color:var(--muted);
+  border-bottom:3px solid transparent;transition:.3s;
+}
+.account-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.account-tab:hover{color:var(--text)}
+.account-content{display:none}
+.account-content.active{display:block}
+
+.order-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:20px;margin-bottom:16px;
+}
+.order-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.order-id{font-weight:600;font-family:'Playfair Display';font-size:16px}
+.order-date{font-size:13px;color:var(--muted)}
+.order-items{margin-bottom:16px}
+.order-item{
+  display:flex;justify-content:space-between;
+  padding:8px 0;font-size:14px;
+}
+.order-item-name{flex:1}
+.order-item-qty{color:var(--muted);margin:0 12px}
+.order-item-price{color:var(--gold);font-weight:600}
+.order-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:12px;border-top:1px solid var(--border);
+}
+.order-total{font-weight:600;font-size:16px}
+.order-status{display:flex;align-items:center;gap:8px}
+
+.notification{
+  position:fixed;bottom:20px;right:20px;
+  background:var(--success);color:#fff;
+  padding:16px 24px;border-radius:8px;
+  z-index:110;animation:slideInUp .3s;
+  max-width:300px;
+}
+.notification.error{background:var(--error)}
+.notification.warning{background:var(--warning);color:#000}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideInUp{from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+@media(max-width:768px){
+  .nav{padding:14px 16px}
+  .nav-links{gap:16px;font-size:13px}
+  .cart{width:100%;right:-100%}
+  .modal-box{padding:24px}
+  .form-row{grid-template-columns:1fr}
+  .admin-tabs,.account-tabs{flex-wrap:wrap}
+  .orders-table{font-size:12px}
+  .orders-table th,.orders-table td{padding:10px}
+  section{padding:60px 16px}
+  .hero{height:70vh}
 }
 
 footer{
   text-align:center;
-  padding:60px;
+  padding:60px 32px;
   color:var(--muted);
-  background:var(--card)
+  background:var(--card);
+  border-top:1px solid var(--border);
 }
 </style>
 </head>
@@ -144,21 +367,25 @@ footer{
 <header>
   <div class="nav">
     <div class="brand">
-      <img src="">
       <span>AD FITWEAR</span>
     </div>
 
     <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#shop">Shop</a>
-      <a href="#admin" id="adminLink" style="display:none">Admin</a>
+      <a href="#" onclick="scrollToSection('shop')">Shop</a>
+      <a href="#" id="accountLink" onclick="openAccount()" style="display:none">Minha Conta</a>
+      <a href="#" id="adminLink" onclick="openAdmin()" style="display:none">Admin</a>
       <a href="#" id="loginLink" onclick="openAuth()">Entrar</a>
       <a href="#" id="logoutLink" onclick="logout()" style="display:none">Sair</a>
     </nav>
 
     <div class="actions">
-      <span onclick="toggleTheme()">🌗</span>
-      <span onclick="toggleCart()">🛒</span>
+      <span onclick="toggleTheme()" title="Alternar tema">🌗</span>
+      <span id="cartBadge" style="position:relative">
+        <span onclick="toggleCart()" title="Abrir carrinho" style="cursor:pointer">🛒</span>
+        <span id="cartCount" style="position:absolute;top:-8px;right:-8px;background:var(--gold);color:#000;
+        border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;
+        font-size:11px;font-weight:600;display:none"></span>
+      </span>
     </div>
   </div>
 </header>
@@ -167,46 +394,206 @@ footer{
   <div>
     <h1>Luxury <span>Fitwear</span></h1>
     <p>Performance, estética e exclusividade para quem exige mais.</p>
-    <a href="#shop" class="btn">EXPLORAR</a>
+    <a href="#" onclick="scrollToSection('shop')" class="btn">EXPLORAR</a>
   </div>
 </section>
 
 <section id="shop">
+  <h2 class="section-title">Nossos Produtos</h2>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar produtos..." onkeyup="filterProducts()">
+    <button class="btn" onclick="filterProducts()">Buscar</button>
+  </div>
   <div class="products" id="products"></div>
-</section>
-
-<section class="admin" id="admin">
-  <h2>Painel Administrativo</h2>
-  <input id="pName" placeholder="Nome do produto">
-  <input id="pPrice" placeholder="Preço">
-  <input id="pImg" placeholder="URL da imagem">
-  <button onclick="addProduct()" class="btn">Adicionar Produto</button>
 </section>
 
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart" id="cart">
-  <h3>Carrinho</h3>
-  <div id="cartItems"></div>
-</div>
-
-<div class="modal" id="authModal">
-  <div class="modal-box">
-    <h3 id="authTitle">Entrar</h3>
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Senha">
-    <button onclick="authAction()">Confirmar</button>
-    <p onclick="toggleAuth()" style="cursor:pointer;text-align:center;margin-top:10px">
-      Criar conta
-    </p>
+  <div class="cart-header">
+    <h3>Carrinho</h3>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div id="cartItems" style="flex:1"></div>
+  <div class="cart-total" id="cartTotal" style="display:none">
+    <span>Total:</span>
+    <span id="cartTotalPrice">R$ 0,00</span>
+  </div>
+  <div class="cart-actions">
+    <button class="btn btn-secondary" onclick="toggleCart()">Continuar</button>
+    <button class="btn btn-primary" onclick="openCheckout()">Checkout</button>
   </div>
 </div>
 
-<footer>© 2026 AD FITWEAR</footer>
+<!-- MODAL AUTH -->
+<div class="modal" id="authModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="authTitle">Entrar</h3>
+      <button class="close-btn" onclick="closeAuth()">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input id="email" type="email" placeholder="seu@email.com">
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input id="password" type="password" placeholder="Sua senha">
+    </div>
+    <button class="btn btn-primary" onclick="authAction()" style="width:100%;margin-top:12px">Confirmar</button>
+    <div class="auth-toggle">
+      <span id="authToggleText" onclick="toggleAuth()">Criar conta</span>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CHECKOUT PIX -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Checkout - PIX</h3>
+      <button class="close-btn" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Nome Completo</label>
+      <input id="checkoutName" type="text" placeholder="Seu nome">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input id="checkoutEmail" type="email" placeholder="seu@email.com">
+    </div>
+    <div class="form-group">
+      <label>Telefone</label>
+      <input id="checkoutPhone" type="tel" placeholder="(11) 99999-9999">
+    </div>
+    <div class="form-group">
+      <label>Endereço</label>
+      <input id="checkoutAddress" type="text" placeholder="Rua, número, complemento">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Cidade</label>
+        <input id="checkoutCity" type="text" placeholder="São Paulo">
+      </div>
+      <div class="form-group">
+        <label>CEP</label>
+        <input id="checkoutZip" type="text" placeholder="01310-100">
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="proceedToPix()" style="width:100%">Prosseguir para PIX</button>
+  </div>
+</div>
+
+<!-- MODAL PIX PAYMENT -->
+<div class="modal" id="pixModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Pagamento PIX</h3>
+      <button class="close-btn" onclick="closePixModal()">✕</button>
+    </div>
+    <div style="text-align:center;margin:20px 0">
+      <p style="color:var(--muted);margin-bottom:12px">Escaneie o QR Code ou copie a chave PIX</p>
+      <div class="pix-qr" id="pixQr">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='white' width='200' height='200'/%3E%3C/svg%3E" style="width:100%;height:100%">
+      </div>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;margin:16px 0">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Chave PIX:</p>
+      <div class="pix-key" id="pixKey">00020126580014br.gov.bcb.pix0136xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx52040000530398654061000.005802BR5913AD FITWEAR6009SAO PAULO62410503***63041D3D</div>
+      <button class="pix-copy" onclick="copyPixKey()">Copiar Chave PIX</button>
+    </div>
+    <div style="background:var(--card);padding:16px;border-radius:8px;margin:16px 0">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px">Dados Bancários:</p>
+      <p style="font-weight:600;margin:4px 0">Banco: Nubank</p>
+      <p style="font-weight:600;margin:4px 0">Titular: AD FITWEAR</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:12px">Após realizar o pagamento, seu pedido será confirmado automaticamente.</p>
+    </div>
+    <button class="btn btn-success" onclick="confirmOrder()" style="width:100%;margin-top:12px">Confirmar Pagamento</button>
+  </div>
+</div>
+
+<!-- MODAL ACCOUNT -->
+<div class="modal" id="accountModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Minha Conta</h3>
+      <button class="close-btn" onclick="closeAccount()">✕</button>
+    </div>
+    <div class="account-tabs">
+      <button class="account-tab active" onclick="switchAccountTab('profile')">Perfil</button>
+      <button class="account-tab" onclick="switchAccountTab('orders')">Pedidos</button>
+    </div>
+    <div class="account-content active" id="profileContent">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="accountEmail" readonly style="background:var(--border);cursor:not-allowed">
+      </div>
+      <button class="btn btn-danger" onclick="logout()" style="width:100%">Sair</button>
+    </div>
+    <div class="account-content" id="ordersContent">
+      <div id="accountOrders" style="max-height:400px;overflow-y:auto"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ADMIN -->
+<div class="modal" id="adminModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Painel Administrativo</h3>
+      <button class="close-btn" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('products')">Produtos</button>
+      <button class="admin-tab" onclick="switchAdminTab('orders')">Pedidos</button>
+    </div>
+
+    <!-- TAB PRODUTOS -->
+    <div class="admin-content active" id="productsContent">
+      <div style="margin-bottom:24px">
+        <h4 style="margin-bottom:16px">Adicionar Novo Produto</h4>
+        <div class="form-group">
+          <label>Nome do Produto</label>
+          <input id="pName" type="text" placeholder="Ex: Legging Premium">
+        </div>
+        <div class="form-group">
+          <label>Preço (R$)</label>
+          <input id="pPrice" type="number" placeholder="Ex: 199.90" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>URL da Imagem</label>
+          <input id="pImg" type="url" placeholder="https://exemplo.com/imagem.jpg">
+        </div>
+        <button class="btn btn-primary" onclick="addProduct()" style="width:100%">Adicionar Produto</button>
+      </div>
+    </div>
+
+    <!-- TAB PEDIDOS -->
+    <div class="admin-content" id="ordersContent">
+      <div style="margin-bottom:16px">
+        <input type="text" id="adminSearchEmail" placeholder="Buscar por email..." 
+               style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);margin-bottom:12px">
+        <select id="adminFilterStatus" onchange="loadAdminOrders()" 
+                style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border)">
+          <option value="">Todos os Status</option>
+          <option value="Preparando">Preparando</option>
+          <option value="Revisando">Revisando</option>
+          <option value="A caminho">A caminho</option>
+          <option value="Enviado">Enviado</option>
+          <option value="Entregue">Entregue</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+      </div>
+      <div id="adminOrdersList" style="max-height:500px;overflow-y:auto"></div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 AD FITWEAR — Luxury Fitwear</footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, query, where, onSnapshot, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig={
   apiKey:"AIzaSyB-qLk9YmjW_imbRqssRYAcQbwW3I5wTq8",
@@ -223,102 +610,454 @@ const db=getFirestore(app);
 
 let isLogin=true;
 let cart=[];
+let currentUser=null;
+let allProducts=[];
+let currentCheckoutData=null;
 
 const productsEl=document.getElementById('products');
-const admin=document.getElementById('admin');
-const adminLink=document.getElementById('adminLink');
+const adminModal=document.getElementById('adminModal');
+const accountModal=document.getElementById('accountModal');
+const authModal=document.getElementById('authModal');
+const checkoutModal=document.getElementById('checkoutModal');
+const pixModal=document.getElementById('pixModal');
 const loginLink=document.getElementById('loginLink');
 const logoutLink=document.getElementById('logoutLink');
+const adminLink=document.getElementById('adminLink');
+const accountLink=document.getElementById('accountLink');
 
 // ===== TEMA =====
+window.toggleTheme=()=>{
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');
+}
 if(localStorage.getItem('theme')==='dark'){
   document.body.classList.add('dark');
 }
-window.toggleTheme=()=>{
-  document.body.classList.toggle('dark');
-  localStorage.setItem(
-    'theme',
-    document.body.classList.contains('dark')?'dark':'light'
-  );
+
+// ===== SCROLL =====
+window.scrollToSection=(id)=>{
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+}
+
+// ===== NOTIFICAÇÕES =====
+function showNotification(msg,type='success'){
+  const n=document.createElement('div');
+  n.className=`notification ${type}`;
+  n.textContent=msg;
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),3000);
 }
 
 // ===== AUTH =====
 onAuthStateChanged(auth,user=>{
-  loginLink.style.display=user?'none':'block';
-  logoutLink.style.display=user?'block':'none';
-
-  if(user && user.email==='admin@adfitwear.com'){
-    admin.style.display='block';
-    adminLink.style.display='block';
+  currentUser=user;
+  if(user){
+    loginLink.style.display='none';
+    logoutLink.style.display='block';
+    accountLink.style.display='block';
+    document.getElementById('accountEmail').value=user.email;
+    if(user.email==='admin@adfitwear.com'){
+      adminLink.style.display='block';
+    }else{
+      adminLink.style.display='none';
+    }
   }else{
-    admin.style.display='none';
+    loginLink.style.display='block';
+    logoutLink.style.display='none';
+    accountLink.style.display='none';
     adminLink.style.display='none';
   }
 });
 
+window.openAuth=()=>authModal.classList.add('active');
+window.closeAuth=()=>{
+  authModal.classList.remove('active');
+  document.getElementById('email').value='';
+  document.getElementById('password').value='';
+  isLogin=true;
+  document.getElementById('authTitle').innerText='Entrar';
+  document.getElementById('authToggleText').innerText='Criar conta';
+}
+window.toggleAuth=()=>{
+  isLogin=!isLogin;
+  document.getElementById('authTitle').innerText=isLogin?'Entrar':'Criar conta';
+  document.getElementById('authToggleText').innerText=isLogin?'Criar conta':'Já tenho conta';
+}
+window.authAction=async()=>{
+  const email=document.getElementById('email').value;
+  const password=document.getElementById('password').value;
+  if(!email||!password){
+    showNotification('Preencha email e senha','error');
+    return;
+  }
+  try{
+    if(isLogin){
+      await signInWithEmailAndPassword(auth,email,password);
+      showNotification('Login realizado com sucesso!');
+    }else{
+      await createUserWithEmailAndPassword(auth,email,password);
+      showNotification('Conta criada com sucesso!');
+    }
+    closeAuth();
+  }catch(e){
+    showNotification(e.message,'error');
+  }
+}
+window.logout=()=>{
+  signOut(auth);
+  closeAccount();
+  cart=[];
+  renderCart();
+  showNotification('Desconectado com sucesso');
+}
+
 // ===== PRODUTOS =====
 async function loadProducts(){
-  const snap=await getDocs(collection(db,'products'));
+  try{
+    const snap=await getDocs(collection(db,'products'));
+    allProducts=[];
+    productsEl.innerHTML='';
+    snap.forEach(d=>{
+      const p=d.data();
+      p.id=d.id;
+      allProducts.push(p);
+      renderProduct(p);
+    });
+  }catch(e){
+    console.error(e);
+  }
+}
+function renderProduct(p){
+  const div=document.createElement('div');
+  div.className='product';
+  div.innerHTML=`
+    <img src="${p.img}" alt="${p.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22360%22%3E%3Crect fill=%22%23ddd%22 width=%22260%22 height=%22360%22/%3E%3C/svg%3E'">
+    <div class="product-info">
+      <h3>${p.name}</h3>
+      <div class="price">R$ ${parseFloat(p.price).toFixed(2)}</div>
+      <button class="add" onclick="addToCart('${p.id}','${p.name}',${p.price})">Adicionar</button>
+    </div>`;
+  productsEl.appendChild(div);
+}
+window.filterProducts=()=>{
+  const search=document.getElementById('searchInput').value.toLowerCase();
   productsEl.innerHTML='';
-  snap.forEach(d=>{
-    const p=d.data();
-    productsEl.innerHTML+=`
-      <div class="product">
-        <img src="${p.img}">
-        <div class="product-info">
-          <h3>${p.name}</h3>
-          <div class="price">R$ ${p.price}</div>
-          <button class="add" onclick="addToCart('${p.name}',${p.price})">
-            Adicionar
-          </button>
-        </div>
-      </div>`;
-  });
+  allProducts.filter(p=>p.name.toLowerCase().includes(search)).forEach(p=>renderProduct(p));
 }
 loadProducts();
 
 // ===== CARRINHO =====
-window.addToCart=(n,p)=>{
-  cart.push({n,p});
+window.addToCart=(id,name,price)=>{
+  const item=cart.find(i=>i.id===id);
+  if(item){
+    item.qty++;
+  }else{
+    cart.push({id,name,price,qty:1});
+  }
   renderCart();
+  showNotification(`${name} adicionado ao carrinho`);
 }
 function renderCart(){
-  cartItems.innerHTML='';
-  cart.forEach(i=>{
-    cartItems.innerHTML+=`
-      <div class="cart-item">
-        <span>${i.n}</span>
-        <span>R$ ${i.p}</span>
-      </div>`;
+  const cartItemsEl=document.getElementById('cartItems');
+  cartItemsEl.innerHTML='';
+  if(cart.length===0){
+    cartItemsEl.innerHTML='<p style="color:var(--muted);text-align:center;padding:20px">Carrinho vazio</p>';
+    document.getElementById('cartTotal').style.display='none';
+    return;
+  }
+  cart.forEach((item,idx)=>{
+    const div=document.createElement('div');
+    div.className='cart-item';
+    div.innerHTML=`
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">R$ ${parseFloat(item.price).toFixed(2)}</div>
+        <div class="cart-item-qty">
+          <button onclick="changeQty(${idx},-1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${idx},1)">+</button>
+        </div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${idx})">✕</button>`;
+    cartItemsEl.appendChild(div);
   });
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartTotalPrice').innerText='R$ '+total.toFixed(2);
+  document.getElementById('cartTotal').style.display='flex';
+  document.getElementById('cartCount').innerText=cart.length;
+  document.getElementById('cartCount').style.display='flex';
+}
+window.changeQty=(idx,delta)=>{
+  cart[idx].qty+=delta;
+  if(cart[idx].qty<=0)removeFromCart(idx);
+  else renderCart();
+}
+window.removeFromCart=(idx)=>{
+  cart.splice(idx,1);
+  renderCart();
 }
 window.toggleCart=()=>{
-  cart.classList.toggle('active');
-  cartOverlay.classList.toggle('active');
+  document.getElementById('cart').classList.toggle('active');
+  document.getElementById('cartOverlay').classList.toggle('active');
 }
 
-// ===== LOGIN =====
-window.openAuth=()=>authModal.classList.add('active');
-window.toggleAuth=()=>{
-  isLogin=!isLogin;
-  authTitle.innerText=isLogin?'Entrar':'Criar conta';
+// ===== CHECKOUT =====
+window.openCheckout=()=>{
+  if(cart.length===0){
+    showNotification('Carrinho vazio','error');
+    return;
+  }
+  if(!currentUser){
+    showNotification('Faça login para continuar','error');
+    openAuth();
+    return;
+  }
+  toggleCart();
+  checkoutModal.classList.add('active');
 }
-window.authAction=()=>{
-  isLogin
-    ? signInWithEmailAndPassword(auth,email.value,password.value)
-    : createUserWithEmailAndPassword(auth,email.value,password.value);
-  authModal.classList.remove('active');
+window.closeCheckout=()=>{
+  checkoutModal.classList.remove('active');
 }
-window.logout=()=>signOut(auth);
+window.proceedToPix=()=>{
+  const name=document.getElementById('checkoutName').value;
+  const email=document.getElementById('checkoutEmail').value;
+  const phone=document.getElementById('checkoutPhone').value;
+  const address=document.getElementById('checkoutAddress').value;
+  const city=document.getElementById('checkoutCity').value;
+  const zip=document.getElementById('checkoutZip').value;
+  if(!name||!email||!phone||!address||!city||!zip){
+    showNotification('Preencha todos os campos','error');
+    return;
+  }
+  currentCheckoutData={name,email,phone,address,city,zip};
+  closeCheckout();
+  pixModal.classList.add('active');
+}
+window.copyPixKey=()=>{
+  const key=document.getElementById('pixKey').innerText;
+  navigator.clipboard.writeText(key);
+  showNotification('Chave PIX copiada');
+}
+window.closePixModal=()=>{
+  pixModal.classList.remove('active');
+}
+window.confirmOrder=async()=>{
+  if(!currentUser||!currentCheckoutData||cart.length===0){
+    showNotification('Erro ao confirmar pedido','error');
+    return;
+  }
+  try{
+    const items=cart.map(i=>({name:i.name,qty:i.qty,price:i.price}));
+    const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+    await addDoc(collection(db,'orders'),{
+      userId:currentUser.uid,
+      userEmail:currentUser.email,
+      customerName:currentCheckoutData.name,
+      customerEmail:currentCheckoutData.email,
+      customerPhone:currentCheckoutData.phone,
+      address:currentCheckoutData.address,
+      city:currentCheckoutData.city,
+      zip:currentCheckoutData.zip,
+      items:items,
+      total:total,
+      status:'Preparando',
+      createdAt:Timestamp.now(),
+      updatedAt:Timestamp.now()
+    });
+    cart=[];
+    renderCart();
+    closePixModal();
+    showNotification('Pedido confirmado! Você receberá uma notificação em breve.');
+    loadAccountOrders();
+  }catch(e){
+    console.error(e);
+    showNotification('Erro ao confirmar pedido','error');
+  }
+}
+
+// ===== ACCOUNT =====
+window.openAccount=()=>{
+  if(!currentUser){
+    openAuth();
+    return;
+  }
+  loadAccountOrders();
+  accountModal.classList.add('active');
+}
+window.closeAccount=()=>{
+  accountModal.classList.remove('active');
+}
+window.switchAccountTab=(tab)=>{
+  document.querySelectorAll('.account-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.account-content').forEach(c=>c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tab+'Content').classList.add('active');
+}
+
+let accountOrdersUnsubscribe = null;
+function loadAccountOrders(){
+  if(!currentUser)return;
+  const ordersEl=document.getElementById('accountOrders');
+  if(accountOrdersUnsubscribe) accountOrdersUnsubscribe();
+  const q=query(collection(db,'orders'),where('userId','==',currentUser.uid));
+  accountOrdersUnsubscribe = onSnapshot(q, (snap) => {
+    ordersEl.innerHTML='';
+    if(snap.empty){
+      ordersEl.innerHTML='<p style="color:var(--muted);text-align:center;padding:20px">Nenhum pedido realizado</p>';
+      return;
+    }
+    let orders = [];
+    snap.forEach(d => orders.push({id: d.id, ...d.data()}));
+    orders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+    orders.forEach(o=>{
+      const div=document.createElement('div');
+      div.className='order-card';
+      const date=o.createdAt?.toDate?.()?.toLocaleString?.('pt-BR')||'Data desconhecida';
+      const statusClass = o.status.toLowerCase().replace(/\s+/g, '-');
+      div.innerHTML=`
+        <div class="order-header">
+          <div>
+            <div class="order-id">Pedido #${o.id.slice(0,8)}</div>
+            <div class="order-date">${date}</div>
+          </div>
+          <span class="status-badge status-${statusClass}">${o.status}</span>
+        </div>
+        <div class="order-items">
+          ${o.items.map(i=>`
+            <div class="order-item">
+              <span class="order-item-name">${i.name}</span>
+              <span class="order-item-qty">x${i.qty}</span>
+              <span class="order-item-price">R$ ${parseFloat(i.price).toFixed(2)}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="order-footer">
+          <div class="order-total">Total: R$ ${parseFloat(o.total).toFixed(2)}</div>
+        </div>`;
+      ordersEl.appendChild(div);
+    });
+  });
+}
 
 // ===== ADMIN =====
+window.openAdmin=()=>{
+  if(!currentUser||currentUser.email!=='admin@adfitwear.com'){
+    showNotification('Acesso negado','error');
+    return;
+  }
+  loadAdminOrders();
+  adminModal.classList.add('active');
+}
+window.closeAdmin=()=>{
+  adminModal.classList.remove('active');
+}
+window.switchAdminTab=(tab)=>{
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.admin-content').forEach(c=>c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tab+'Content').classList.add('active');
+}
 window.addProduct=async()=>{
-  await addDoc(collection(db,'products'),{
-    name:pName.value,
-    price:pPrice.value,
-    img:pImg.value
+  const name=document.getElementById('pName').value;
+  const price=document.getElementById('pPrice').value;
+  const img=document.getElementById('pImg').value;
+  if(!name||!price||!img){
+    showNotification('Preencha todos os campos','error');
+    return;
+  }
+  try{
+    await addDoc(collection(db,'products'),{name,price:parseFloat(price),img});
+    document.getElementById('pName').value='';
+    document.getElementById('pPrice').value='';
+    document.getElementById('pImg').value='';
+    loadProducts();
+    showNotification('Produto adicionado com sucesso');
+  }catch(e){
+    console.error(e);
+    showNotification('Erro ao adicionar produto','error');
+  }
+}
+
+let adminOrdersUnsubscribe = null;
+window.loadAdminOrders = function(){
+  const listEl=document.getElementById('adminOrdersList');
+  if(adminOrdersUnsubscribe) adminOrdersUnsubscribe();
+  adminOrdersUnsubscribe = onSnapshot(collection(db,'orders'), (snap) => {
+    listEl.innerHTML='';
+    let orders=[];
+    snap.forEach(d=>{
+      orders.push({id:d.id,...d.data()});
+    });
+    orders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+    const searchEmail=document.getElementById('adminSearchEmail').value.toLowerCase();
+    const filterStatus=document.getElementById('adminFilterStatus').value;
+    orders = orders.filter(o=>{
+      const emailMatch=!searchEmail || (o.userEmail && o.userEmail.toLowerCase().includes(searchEmail));
+      const statusMatch=!filterStatus || o.status===filterStatus;
+      return emailMatch && statusMatch;
+    });
+    if(orders.length===0){
+      listEl.innerHTML='<p style="color:var(--muted);text-align:center;padding:20px">Nenhum pedido encontrado</p>';
+      return;
+    }
+    orders.forEach(o=>{
+      const div=document.createElement('div');
+      div.className='order-card';
+      const date=o.createdAt?.toDate?.()?.toLocaleString?.('pt-BR')||'Data desconhecida';
+      const statusClass = o.status.toLowerCase().replace(/\s+/g, '-');
+      div.innerHTML=`
+        <div class="order-header">
+          <div>
+            <div class="order-id">Pedido #${o.id.slice(0,8)}</div>
+            <div class="order-date">${date} | ${o.userEmail}</div>
+          </div>
+          <span class="status-badge status-${statusClass}">${o.status}</span>
+        </div>
+        <div style="margin:12px 0;font-size:13px">
+          <p><strong>${o.customerName}</strong></p>
+          <p>${o.address}, ${o.city} - ${o.zip}</p>
+          <p>${o.customerPhone}</p>
+        </div>
+        <div class="order-items">
+          ${o.items.map(i=>`
+            <div class="order-item">
+              <span class="order-item-name">${i.name}</span>
+              <span class="order-item-qty">x${i.qty}</span>
+              <span class="order-item-price">R$ ${parseFloat(i.price).toFixed(2)}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="order-footer">
+          <div class="order-total">Total: R$ ${parseFloat(o.total).toFixed(2)}</div>
+          <select onchange="updateOrderStatus('${o.id}',this.value)" style="padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text)">
+            <option value="">Alterar status</option>
+            <option value="Preparando" ${o.status==='Preparando'?'selected':''}>Preparando</option>
+            <option value="Revisando" ${o.status==='Revisando'?'selected':''}>Revisando</option>
+            <option value="A caminho" ${o.status==='A caminho'?'selected':''}>A caminho</option>
+            <option value="Enviado" ${o.status==='Enviado'?'selected':''}>Enviado</option>
+            <option value="Entregue" ${o.status==='Entregue'?'selected':''}>Entregue</option>
+            <option value="Cancelado" ${o.status==='Cancelado'?'selected':''}>Cancelado</option>
+          </select>
+        </div>`;
+      listEl.appendChild(div);
+    });
   });
-  loadProducts();
+}
+document.getElementById('adminSearchEmail').addEventListener('input', window.loadAdminOrders);
+
+window.updateOrderStatus=async(orderId,newStatus)=>{
+  if(!newStatus)return;
+  try{
+    await updateDoc(doc(db,'orders',orderId),{
+      status:newStatus,
+      updatedAt:Timestamp.now()
+    });
+    showNotification('Status atualizado para '+newStatus);
+  }catch(e){
+    console.error(e);
+    showNotification('Erro ao atualizar status','error');
+  }
 }
 </script>
 
